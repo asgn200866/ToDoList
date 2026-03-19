@@ -7,21 +7,28 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <div class="succes-delete">
+      <h2 class="text-succes">Do you confirm the list clearing?</h2>
+      <button class="button-succes" id="buttonYes">Yes</button>
+      <button class="button-succes" id="buttonNo">No</button>
+    </div>
     <div class="header-top">
       <div class="main">
         <h1>Monthly Planner</h1>
+        <div class="month"></div>
         <button class="month-btn">month</button>
+        <input type="text" class="month-input" id="monthElement" />
       </div>
       <div class="pretop-label">
         <div class="tasks-label">
           <h2>tasks</h2>
-          <button class="back-btn">←</button>
-          <button class="close-tasks-btn">Х</button>
+          <button class="smile-btn"></button>
+          <button class="delete-btn" id="tasks">Х</button>
         </div>
         <div class="nodeadline-label">
           <h2>no deadline</h2>
-          <button class="forward-btn">→</button>
-          <button class="close-nodeadline-btn">Х</button>
+          <button class="smile-btn"></button>
+          <button class="delete-btn" id="nodeadline">Х</button>
         </div>
       </div>
       <div class="label-text">

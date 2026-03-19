@@ -14,7 +14,8 @@ body {
 .pretop-label,
 .label-text,
 .days-calendar,
-.calendar {
+.calendar,
+.month {
   display: flex;
   flex-direction: row;
   flex: 1;
@@ -63,5 +64,16 @@ body {
 }
 
 .checkbox-day-week {
+  display: none;
+}
+
+.succes-delete {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  width: 50vw;
+  height: 50vh;
+  background-color: white;
   display: none;
 }
