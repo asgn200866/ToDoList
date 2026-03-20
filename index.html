@@ -9,30 +9,29 @@
   <body>
     <div class="succes-delete">
       <h2 class="text-succes">Do you confirm the list clearing?</h2>
-      <button class="button-succes" id="buttonYes">Yes</button>
-      <button class="button-succes" id="buttonNo">No</button>
+      <div class="buttons-succes">
+        <button data-type="yes">Yes</button> <button data-type="no">No</button>
+      </div>
     </div>
     <div class="header-top">
       <div class="main">
         <h1>Monthly Planner</h1>
-        <div class="month"></div>
-        <button class="month-btn">month</button>
-        <input type="text" class="month-input" id="monthElement" />
+        <input type="text" id="monthElement" placeholder="month:" />
       </div>
       <div class="pretop-label">
         <div class="tasks-label">
           <h2>tasks</h2>
           <button class="smile-btn"></button>
-          <button class="delete-btn" id="tasks">Х</button>
+          <button class="delete-btn" id="tasks" data-name="task">✕</button>
         </div>
         <div class="nodeadline-label">
           <h2>no deadline</h2>
           <button class="smile-btn"></button>
-          <button class="delete-btn" id="nodeadline">Х</button>
+          <button class="delete-btn" id="nodeadline" data-name="nodeadline">✕</button>
         </div>
       </div>
       <div class="label-text">
-        <div class="column-tasks" id="tasksText">
+        <div class="column-task" id="tasksText">
           <!--<div class="label-text-tasks">
             <input type="checkbox" class="tasks-cb" />
             <input type="text" class="tasks-input" />

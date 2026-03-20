@@ -163,7 +163,7 @@ function deleteElement(group, valuesTargetElement) {
   }
 } // Проверка и удаление пустых обьектов
 
-// Блок для строк задач и календаря ----------------------------------------------------------------------
+// Блок для строк задач и календаря
 
 const monthObject = {
   name: 'month',
@@ -179,7 +179,7 @@ monthObject.container.addEventListener('input', (event) => {
   messageLog();
 });
 
-// Блока для месяца ---------------------------------------------------------------------------------------
+// Блока для месяца
 
 const buttonSmileGroup = {
   elements: Array.from(document.getElementsByClassName('smile-btn')),
@@ -298,7 +298,57 @@ buttonSmileGroup.elements.forEach((group) => {
   });
 });
 
-// Кнопка для смайлика ----------------------------------------------------------------------------------
+// Кнопка для смайлика
+
+const buttonDeleteGroup = {
+  elements: Array.from(document.getElementsByClassName('delete-btn')),
+  containerSucces: Array.from(document.getElementsByClassName('succes-delete')),
+  groupName: '',
+};
+
+buttonDeleteGroup.elements.forEach((elements) => {
+  elements.addEventListener('click', (event) => {
+    updateModalWindow(event);
+    messageLog();
+  });
+});
+
+function updateModalWindow(event) {
+  const containerSucces = buttonDeleteGroup.containerSucces[0];
+  containerSucces.style.display = 'block';
+
+  const targetClass = event.target.dataset.name;
+  buttonDeleteGroup.groupName = targetClass;
+
+  const heading = containerSucces.querySelector('h2');
+  heading.textContent = `Do you confirm the ${targetClass} clearing?`;
+}
+
+buttonDeleteGroup.containerSucces.forEach((elements) => {
+  elements.addEventListener('click', (event) => {
+    succesDelete(event);
+    messageLog();
+  });
+});
+
+function succesDelete(event) {
+  const type = event.target.dataset.type;
+  const containerSucces = buttonDeleteGroup.containerSucces[0];
+  const groupName = buttonDeleteGroup.groupName;
+
+  if (type == 'yes') {
+    const currentClass = constructorKey[groupName];
+    currentClass.arrayObjects.length = 0;
+    const parentContainer = document.querySelector(`.column-${groupName}`);
+    parentContainer.replaceChildren();
+    createElement(constructorKey[groupName]);
+    containerSucces.style.display = 'none';
+  } else if (type == 'no') {
+    containerSucces.style.display = 'none';
+  }
+}
+
+// Кнопки удаления
 
 function messageLog() {
   console.clear();
