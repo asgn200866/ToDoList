@@ -30,6 +30,7 @@ body {
   --color--background--beige: rgb(248, 235, 216);
   --color--shadow--beige: rgb(219, 147, 112);
   --color--active--beige: rgb(208, 195, 176);
+  --color--active--alt--beige: rgb(254, 250, 243);
 }
 
 .main,
@@ -43,32 +44,6 @@ body {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-}
-
-.column-task,
-.column-nodeadline,
-.column-monday,
-.column-tuesday,
-.column-wednesday,
-.column-thursday,
-.column-friday,
-.column-saturday,
-.column-sunday {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  align-items: center;
-}
-
-.label-text-monday,
-.label-text-tuesday,
-.label-text-wednesday,
-.label-text-thursday,
-.label-text-friday,
-.label-text-saturday,
-.label-text-sunday {
-  display: flex;
-  flex-direction: row;
 }
 
 .tasks-input,
@@ -168,8 +143,8 @@ body {
 
   border: solid 3px var(--color--black);
   box-shadow:
-    8px 8px var(--color--shadow--beige),
-    8px 8px 3px var(--color--black);
+    5px 5px var(--color--shadow--beige),
+    5px 5px 3px var(--color--black);
   border-radius: 30px;
   transition:
     transform 0.3s ease,
@@ -189,10 +164,14 @@ main input::placeholder {
 }
 
 .main input:focus {
-  box-shadow: 0px 0px var(--color--shadow--beige, 0.9);
-  background-color: var(--color--active--beige, 0.9);
-  transform: translate(8px, 8px);
+  background-color: var(--color--active--alt--beige);
+  transform: translate(-2px, -2px);
+
   outline: none;
+
+  box-shadow:
+    7px 7px var(--color--shadow--beige),
+    7px 7px 3px var(--color--black);
 }
 
 .pretop-label .tasks-label,
@@ -230,14 +209,12 @@ main input::placeholder {
 }
 
 .label-text {
-  background-color: rgb(76, 104, 95); /* тест */
   width: 100%;
   height: auto;
 }
 
 .label-text-tasks,
 .label-text-nodeadline {
-  /*   background-color: var(--color--background--beige); */
   width: 50vw;
   height: 3vh;
 
@@ -245,23 +222,7 @@ main input::placeholder {
   justify-content: center;
   align-items: center;
 
-  margin: 3px 0 3px 0;
-}
-
-.tasks-cb,
-.nodeadline-cb {
-  background-color: var(--color--background--beige);
-  height: 100%;
-  aspect-ratio: 1 / 1;
-
-  border: solid 2px var(--color--black);
-  box-shadow:
-    2px 2px var(--color--shadow--beige),
-    2px 2px 3px var(--color--black);
-  border-radius: 6px;
-
-  font-family: 'GNF';
-  margin: 0 3px 0 0;
+  margin: 4px 0 4px 0;
 }
 
 .tasks-input,
@@ -276,8 +237,170 @@ main input::placeholder {
     2px 2px var(--color--shadow--beige),
     2px 2px 3px var(--color--black);
 
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
   padding: 0 0 0 5px;
 
   font-family: 'GNF';
   font-size: 1.2rem;
+}
+
+.nodeadline-cb:checked,
+.tasks-cb:checked,
+.nodeadline-cb:checked + .nodeadline-input,
+.tasks-cb:checked + .tasks-input {
+  background-color: var(--color--active--beige) !important;
+  transform: translate(2px, 2px) !important;
+
+  box-shadow: 0px 0px 0px var(--color--black) !important;
+}
+
+.tasks-input:focus,
+.nodeadline-input:focus,
+.label-text-tasks:has(.tasks-input:focus) .tasks-cb,
+.label-text-nodeadline:has(.nodeadline-input:focus) .nodeadline-cb {
+  background-color: var(--color--active--alt--beige);
+  transform: translate(-2px, -2px);
+
+  outline: none;
+
+  box-shadow:
+    4px 4px var(--color--shadow--beige),
+    4px 4px 3px var(--color--black);
+}
+
+.tasks-cb,
+.nodeadline-cb {
+  background-color: var(--color--background--beige);
+  height: 100%;
+  aspect-ratio: 1 / 1;
+
+  border: solid 2px var(--color--black);
+  box-shadow:
+    2px 2px var(--color--shadow--beige),
+    2px 2px 3px var(--color--black);
+  border-radius: 6px;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.3s ease;
+
+  font-family: 'GNF';
+  margin: 0 6px 0 0;
+}
+
+.tasks-cb:checked::after,
+.nodeadline-cb:checked::after {
+  width: 100%;
+  height: 100%;
+  content: '✔';
+
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 0 0 0 4px;
+}
+
+.days-calendar {
+  width: 100%;
+  height: 8vh;
+
+  display: flex;
+  align-items: center;
+  justify-self: center;
+
+  font-family: 'GNF';
+  font-size: 1.2rem;
+  letter-spacing: 2px;
+
+  margin: 2vh 0 0 0;
+}
+
+.days-calendar h3 {
+  background-color: var(--color--background--beige);
+  width: 7vw;
+
+  text-align: center;
+
+  border: solid 2px var(--color--black);
+  border-radius: 20px;
+  box-shadow:
+    3px 3px var(--color--shadow--beige),
+    3px 3px 3px var(--color--black);
+
+  padding: 1vh 0 1vh 0;
+}
+
+.column-task,
+.column-nodeadline,
+.column-monday,
+.column-tuesday,
+.column-wednesday,
+.column-thursday,
+.column-friday,
+.column-saturday,
+.column-sunday {
+  display: flex;
+  flex-direction: column;
+  justify-self: center;
+}
+
+.label-text-monday,
+.label-text-tuesday,
+.label-text-wednesday,
+.label-text-thursday,
+.label-text-friday,
+.label-text-saturday,
+.label-text-sunday {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+  margin: 1vh 0 0 0;
+}
+
+.monday-input,
+.tuesday-input,
+.wednesday-input,
+.thursday-input,
+.friday-input,
+.saturday-input,
+.sunday-input {
+  background-color: var(--color--background--beige);
+  width: 12vw;
+  height: 3vh;
+
+  border: solid 2px var(--color--black);
+  border-radius: 6px;
+  box-shadow:
+    2px 2px var(--color--shadow--beige),
+    2px 2px 3px var(--color--black);
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  font-family: 'GNF';
+  font-size: 1.2rem;
+}
+
+.monday-input:focus,
+.tuesday-input:focus,
+.wednesday-input:focus,
+.thursday-input:focus,
+.friday-input:focus,
+.saturday-input:focus,
+.sunday-input:focus {
+  background-color: var(--color--active--alt--beige);
+  transform: translate(-2px, -2px);
+
+  outline: none;
+
+  box-shadow:
+    4px 4px var(--color--shadow--beige),
+    4px 4px 3px var(--color--black);
 }
