@@ -292,7 +292,6 @@ buttonSmileGroup.elements.forEach((group) => {
   group.addEventListener('mousedown', (event) => {
     const pressedButton = event.target;
     const smileArray = buttonSmileGroup.smileArray;
-    let value = buttonSmileGroup.value;
     const randomSmile = smileArray[Math.floor(Math.random() * smileArray.length)];
     value = pressedButton.textContent = randomSmile;
   });
@@ -304,7 +303,12 @@ const buttonDeleteGroup = {
   elements: Array.from(document.getElementsByClassName('delete-btn')),
   containerSucces: Array.from(document.getElementsByClassName('succes-delete')),
   groupName: '',
+  /* ----------------------------------------------------------- */
+  elementPhoto: document.querySelector('.imageMem'),
+  /* ----------------------------------------------------------- */
 };
+
+console.log(buttonDeleteGroup.elementPhoto);
 
 buttonDeleteGroup.elements.forEach((elements) => {
   elements.addEventListener('click', (event) => {
@@ -322,6 +326,12 @@ function updateModalWindow(event) {
 
   const heading = containerSucces.querySelector('h2');
   heading.textContent = `Do you confirm the ${targetClass} clearing?`;
+  /* ----------------------------------------------------------- */
+  const arrPhoto = ['galery/evreilev.jpg', 'galery/dedinmirror.jpg'];
+  const elementPhoto = buttonDeleteGroup.elementPhoto;
+  const randomPhoto = arrPhoto[Math.floor(Math.random() * arrPhoto.length)];
+  elementPhoto.src = randomPhoto;
+  /* ----------------------------------------------------------- */
 }
 
 buttonDeleteGroup.containerSucces.forEach((elements) => {
