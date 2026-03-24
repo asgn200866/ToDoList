@@ -10,7 +10,7 @@
     <div class="succes-delete">
       <h2></h2>
       <!-------------------------------------------------------->
-      <img class="imageMem" src="galery/evreilev.jpg" alt="Мем фото" />
+      <img class="imageMem" src="" alt="Мем фото" />
       <!-------------------------------------------------------->
       <div class="buttons-succes">
         <button data-type="yes">Yes</button> <button data-type="no">No</button>
@@ -19,17 +19,18 @@
     <div class="header-top">
       <div class="main">
         <h1>Monthly Planner</h1>
-        <input type="text" id="monthElement" placeholder="month:" />
+        <input type="text" id="monthElement" />
+        <span>month:</span>
       </div>
       <div class="pretop-label">
         <div class="tasks-label">
           <h2>tasks</h2>
-          <button class="smile-btn"></button>
+          <button class="smile-btn" data-class="task"></button>
           <button class="delete-btn" id="tasks" data-name="task">✕</button>
         </div>
         <div class="nodeadline-label">
           <h2>no deadline</h2>
-          <button class="smile-btn"></button>
+          <button class="smile-btn" data-class="nodeadline"></button>
           <button class="delete-btn" id="nodeadline" data-name="nodeadline">✕</button>
         </div>
       </div>
