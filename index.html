@@ -7,108 +7,127 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="succes-delete">
+    <header class="top-label">
+      <h1>Monthly Planner</h1>
+      <input type="text" id="monthElement" />
+      <span>month:</span>
+    </header>
+    <!-- Панель заголовка и месяца -->
+    <main>
+      <section class="pretop-label" aria-label="Задачи">
+        <div class="tasks-label">
+          <h2>tasks</h2>
+          <button
+            class="smile-btn"
+            data-class="task"
+            aria-label="Выбрать случайный смайлик"
+          ></button>
+          <button class="delete-btn" id="tasks" data-name="task" aria-label="Удалить все задачи">
+            ✕
+          </button>
+        </div>
+        <!-- Заголовок панели задач -->
+        <div class="nodeadline-label">
+          <h2>no deadline</h2>
+          <button
+            class="smile-btn"
+            data-class="nodeadline"
+            aria-label="Выбрать случайный смайлик"
+          ></button>
+          <button class="delete-btn" data-name="nodeadline" aria-label="Удалить все задачи">
+            ✕
+          </button>
+        </div>
+        <!-- Заголовок панели задач без крайнего срока -->
+      </section>
+      <!-- Заголовки колонок задач -->
+      <section class="label-text-quests" aria-label="Поля ввода задач">
+        <ul class="column-task" id="tasksText">
+          <!--<li class="label-text-tasks">
+            <input type="checkbox" class="tasks-cb" />
+            <input type="text" class="tasks-input" />
+          </li>-->
+        </ul>
+        <!-- Блок для колонки задач -->
+        <div class="main-photo">
+          <img src="galery/mainphoto.jpg" alt="Главное фото" />
+        </div>
+        <!-- Мемное фото в центре -->
+        <ul class="column-nodeadline" id="nodeadlineText">
+          <!--<li class="label-text-nodeadline">
+            <input type="checkbox" class="nodeadline-cb" />
+            <input type="text" class="nodeadline-input" />
+          </li>-->
+        </ul>
+        <!-- Блок для колонки задач без крайнего срока -->
+      </section>
+      <!-- Колонки задач -->
+      <section class="week" aria-label="Дни недели">
+        <ul class="days-week">
+          <li><h3>monday</h3></li>
+          <li><h3>tuesday</h3></li>
+          <li><h3>wednesday</h3></li>
+          <li><h3>thursday</h3></li>
+          <li><h3>friday</h3></li>
+          <li><h3>saturday</h3></li>
+          <li><h3>sunday</h3></li>
+        </ul>
+      </section>
+      <!-- Заголовки дней недели -->
+      <section class="label-text-week" aria-label="Поля ввода дней недели">
+        <ul class="column-monday" id="mondayText">
+          <!--     <li class="label-text-monday">
+          <input type="checkbox" class="checkbox-day-week" />
+          <input type="text" class="monday-input" />
+        </li> -->
+        </ul>
+        <ul class="column-tuesday" id="tuesdayText">
+          <!--       <li class="label-text-tuesday">
+          <input type="checkbox" class="checkbox-day-week" />
+          <input type="text" class="tuesday-input" />
+        </li> -->
+        </ul>
+        <ul class="column-wednesday" id="wednesdayText">
+          <!--         <li class="label-text-wednesday">
+          <input type="checkbox" class="checkbox-day-week" />
+          <input type="text" class="wednesday-input" />
+        </li> -->
+        </ul>
+        <ul class="column-thursday" id="thursdayText">
+          <!--       <li class="label-text-thursday">
+          <input type="checkbox" class="checkbox-day-week" />
+          <input type="text" class="thursday-input" />
+        </li> -->
+        </ul>
+        <ul class="column-friday" id="fridayText">
+          <!--         <li class="label-text-friday">
+          <input type="checkbox" class="checkbox-day-week" />
+          <input type="text" class="friday-input" />
+        </li> -->
+        </ul>
+        <ul class="column-saturday" id="saturdayText">
+          <!--      <li class="label-text-saturday">
+          <input type="checkbox" class="checkbox-day-week" />
+          <input type="text" class="saturday-input" />
+        </li> -->
+        </ul>
+        <ul class="column-sunday" id="sundayText">
+          <!--        <li class="label-text-sunday">
+          <input type="checkbox" class="checkbox-day-week" />
+          <input type="text" class="sunday-input" />
+        </li> -->
+        </ul>
+      </section>
+      <!-- Колонки задач для дней недели -->
+    </main>
+    <dialog class="label-delete">
       <h2></h2>
-      <!-------------------------------------------------------->
-      <img class="imageMem" src="" alt="Мем фото" />
-      <!-------------------------------------------------------->
+      <img class="image-mem" alt="Мем фото" />
       <div class="buttons-succes">
         <button data-type="yes">Yes</button> <button data-type="no">No</button>
       </div>
-    </div>
-    <div class="header-top">
-      <div class="main">
-        <h1>Monthly Planner</h1>
-        <input type="text" id="monthElement" />
-        <span>month:</span>
-      </div>
-      <div class="pretop-label">
-        <div class="tasks-label">
-          <h2>tasks</h2>
-          <button class="smile-btn" data-class="task"></button>
-          <button class="delete-btn" id="tasks" data-name="task">✕</button>
-        </div>
-        <div class="nodeadline-label">
-          <h2>no deadline</h2>
-          <button class="smile-btn" data-class="nodeadline"></button>
-          <button class="delete-btn" id="nodeadline" data-name="nodeadline">✕</button>
-        </div>
-      </div>
-      <div class="label-text">
-        <div class="column-task" id="tasksText">
-          <!--<div class="label-text-tasks">
-            <input type="checkbox" class="tasks-cb" />
-            <input type="text" class="tasks-input" />
-          </div>-->
-        </div>
-        <!-------------------------------------------------------->
-        <section class="main-photo">
-          <img src="galery/mainphoto.jpg" alt="Главное фото" />
-        </section>
-        <!-------------------------------------------------------->
-        <div class="column-nodeadline" id="nodeadlineText">
-          <!--<div class="label-text-nodeadline">
-            <input type="checkbox" class="nodeadline-cb" />
-            <input type="text" class="nodeadline-input" />
-          </div>-->
-        </div>
-      </div>
-    </div>
-    <div class="calendar">
-      <div class="days-calendar">
-        <h3>monday</h3>
-        <h3>tuesday</h3>
-        <h3>wednesday</h3>
-        <h3>thursday</h3>
-        <h3>friday</h3>
-        <h3>saturday</h3>
-        <h3>sunday</h3>
-      </div>
-    </div>
-    <div class="label-text">
-      <div class="column-monday" id="mondayText">
-        <!--     <div class="label-text-monday">
-          <input type="checkbox" class="checkbox-day-week" />
-          <input type="text" class="monday-input" />
-        </div> -->
-      </div>
-      <div class="column-tuesday" id="tuesdayText">
-        <!--       <div class="label-text-tuesday">
-          <input type="checkbox" class="checkbox-day-week" />
-          <input type="text" class="tuesday-input" />
-        </div> -->
-      </div>
-      <div class="column-wednesday" id="wednesdayText">
-        <!--         <div class="label-text-wednesday">
-          <input type="checkbox" class="checkbox-day-week" />
-          <input type="text" class="wednesday-input" />
-        </div> -->
-      </div>
-      <div class="column-thursday" id="thursdayText">
-        <!--       <div class="label-text-thursday">
-          <input type="checkbox" class="checkbox-day-week" />
-          <input type="text" class="thursday-input" />
-        </div> -->
-      </div>
-      <div class="column-friday" id="fridayText">
-        <!--         <div class="label-text-friday">
-          <input type="checkbox" class="checkbox-day-week" />
-          <input type="text" class="friday-input" />
-        </div> -->
-      </div>
-      <div class="column-saturday" id="saturdayText">
-        <!--      <div class="label-text-saturday">
-          <input type="checkbox" class="checkbox-day-week" />
-          <input type="text" class="saturday-input" />
-        </div> -->
-      </div>
-      <div class="column-sunday" id="sundayText">
-        <!--        <div class="label-text-sunday">
-          <input type="checkbox" class="checkbox-day-week" />
-          <input type="text" class="sunday-input" />
-        </div> -->
-      </div>
-    </div>
+    </dialog>
+    <!-- Окно удаления -->
 
     <script src="script.js"></script>
   </body>

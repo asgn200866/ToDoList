@@ -91,7 +91,7 @@ function getValue(event) {
 
 function createElement(group) {
   const config = constructorKey[group.name];
-  const fragmentMain = document.createElement('div');
+  const fragmentMain = document.createElement('li');
   fragmentMain.className = config.baseClassName;
   const idElement = crypto.randomUUID();
   fragmentMain.innerHTML = `
@@ -125,14 +125,7 @@ function checkboxUpdateStyle(group, event) {
   const cardElement = currentElement.closest('[data-id]');
   const inputId = cardElement.dataset.id;
   const realId = idArray.find((item) => item.id === inputId);
-  const inputElement = cardElement.querySelector('input[type="text"]');
   const checkboxObject = currentElement.checked;
-
-  if (checkboxObject) {
-    inputElement.style.textDecoration = 'line-through';
-  } else {
-    inputElement.style.textDecoration = 'none';
-  }
 
   if (realId) {
     realId.cbCheck = checkboxObject;
@@ -173,138 +166,153 @@ function deleteElement(group, valuesTargetElement) {
 
 const monthObject = {
   name: 'month',
-  value: '',
   input: document.getElementsByClassName('month-input'),
   container: document.getElementById('monthElement'),
+  arrayObjects: [{}],
 }; // Объект для работы с элементом месяца
 
 monthObject.container.addEventListener('input', (event) => {
   const currentElement = event.target;
-  const monthValue = currentElement.value;
-  monthObject.value = monthValue;
+  monthObject.value = currentElement.value;
+  monthObject.arrayObjects[0].month = currentElement.value;
+
   messageLog();
   saveLocalStorage();
 }); // Обработчик событий на поле ввода месяца
 
 // Блок для месяца
 
+const groupNameSmile = ['task', 'nodeadline']; // Массив для группы смайликов
+
 const buttonSmileGroup = {
-  name: 'smile',
-  elements: Array.from(document.getElementsByClassName('smile-btn')),
-  smileArray: [
-    '(* ^ ω ^)',
-    '(´ ∀ *)',
-    '٩(◕‿◕｡)۶',
-    '☆*:.｡.o(≧▽≦)o.｡.:*☆',
-    '(o^▽^o)',
-    '(⌒▽⌒)☆',
-    '<(￣︶￣)>',
-    "。.:☆*:･'(*⌒―⌒*)))",
-    'ヽ(・∀・)ﾉ',
-    '(´｡• ω •｡)',
-    '(￣ω￣)',
-    '｀;:゛;｀;･(°ε° )',
-    '(o･ω･o)',
-    '(＠＾◡＾)',
-    'ヽ(・ω・)ﾉ',
-    '(o_ _)ﾉ彡☆',
-    '(^人^)',
-    '(o´▽o)',
-    '(*´▽)',
-    '｡ﾟ( ﾟ^∀^ﾟ)ﾟ｡',
-    '( ´ ω )',
-    '(((o(*°▽°*)o)))',
-    '(≧◡≦)',
-    '(o´∀o)',
-    '(´• ω •)',
-    '(＾▽＾)',
-    '(⌒ω⌒)',
-    '∑d(°∀°d)',
-    '╰(▔∀▔)╯',
-    '(─‿‿─)',
-    '(*^‿^*)',
-    'ヽ(o^ ^o)ﾉ',
-    '(✯◡✯)',
-    '(◕‿◕)',
-    '(*≧ω≦*)',
-    '(☆▽☆)',
-    '(⌒‿⌒)',
-    '＼(≧▽≦)／',
-    'ヽ(o＾▽＾o)ノ',
-    "☆ ～('▽^人)",
-    '(*°▽°*)',
-    '٩(｡•́‿•̀｡)۶',
-    '(✧ω✧)',
-    'ヽ(*⌒▽⌒*)ﾉ',
-    '(´｡• ᵕ •｡)',
-    '( ´ ▽ )',
-    '(￣▽￣)',
-    '╰(*´︶)╯',
-    'ヽ(>∀<☆)ノ',
-    'o(≧▽≦)o',
-    '(☆ω☆)',
-    '(っ˘ω˘ς )',
-    '＼(￣▽￣)／',
-    '(¯︶¯)',
-    '＼(＾▽＾)／',
-    '٩(◕‿◕)۶',
-    '(o˘◡˘o)',
-    '(★ω★)/',
-    '(^ヮ^)/',
-    '(〃＾▽＾〃)',
-    '(╯✧▽✧)╯',
-    'o(>ω<)o',
-    'o( ❛ᴗ❛ )o',
-    '｡ﾟ(TヮT)ﾟ｡',
-    '( ‾́ ◡ ‾́ )',
-    '(ﾉ´ヮ)ﾉ*: ･ﾟ',
-    '(b ᵔ▽ᵔ)b',
-    '(๑˃ᴗ˂)ﻭ',
-    '(๑˘︶˘๑)',
-    '( ˙꒳​˙ )',
-    '(*꒦ິ꒳꒦ີ)',
-    '°˖✧◝(⁰▿⁰)◜✧˖°',
-    '(´･ᴗ･ )',
-    '(ﾉ◕ヮ◕)ﾉ:･ﾟ✧',
-    '(„• ֊ •„)',
-    '(.❛ ᴗ ❛.)',
-    '(⁀ᗢ⁀)',
-    '(￢‿￢ )',
-    '(¬‿¬ )',
-    '(￣▽￣)b',
-    '( ˙▿˙ )',
-    '(¯▿¯)',
-    '( ◕▿◕ )',
-    '＼(٥⁀▽⁀ )／',
-    '(„• ᴗ •„)',
-    '(ᵔ◡ᵔ)',
-    '( ´ ▿ )',
-    '(๑>◡<๑)',
-    '( = ⩊ = )',
-    '( ´ ꒳ )',
-    '⸜( ´ ꒳ )⸝',
-    '⸜(⸝⸝⸝´꒳⸝⸝⸝)⸝',
-    '⸜(ˊᗜˋ*)⸝',
-    '⸜( ˊᵕˋ )⸝',
-    '(>⩊<)',
-    '(ᗒ⩊ᗕ)',
-    '(ᵔ⩊ᵔ)',
-    '( ᵔ ⩊ ᵔ )',
-    '(•⩊•)',
-    '( • ⩊ • )',
-  ],
-  value: '',
-  groupName: '',
-}; // Объект для кнопки смайликов
+  ...Object.fromEntries(
+    groupNameSmile.map((groupName) => [
+      groupName,
+      {
+        name: `smile_${groupName}`,
+        elements: document.querySelector(`[data-class="${groupName}"]`),
+        smileArray: [
+          '(* ^ ω ^)',
+          '(´ ∀ *)',
+          '٩(◕‿◕｡)۶',
+          '☆*:.｡.o(≧▽≦)o.｡.:*☆',
+          '(o^▽^o)',
+          '(⌒▽⌒)☆',
+          '<(￣︶￣)>',
+          "。.:☆*:･'(*⌒―⌒*)))",
+          'ヽ(・∀・)ﾉ',
+          '(´｡• ω •｡)',
+          '(￣ω￣)',
+          '｀;:゛;｀;･(°ε° )',
+          '(o･ω･o)',
+          '(＠＾◡＾)',
+          'ヽ(・ω・)ﾉ',
+          '(o_ _)ﾉ彡☆',
+          '(^人^)',
+          '(o´▽o)',
+          '(*´▽)',
+          '｡ﾟ( ﾟ^∀^ﾟ)ﾟ｡',
+          '( ´ ω )',
+          '(((o(*°▽°*)o)))',
+          '(≧◡≦)',
+          '(o´∀o)',
+          '(´• ω •)',
+          '(＾▽＾)',
+          '(⌒ω⌒)',
+          '∑d(°∀°d)',
+          '╰(▔∀▔)╯',
+          '(─‿‿─)',
+          '(*^‿^*)',
+          'ヽ(o^ ^o)ﾉ',
+          '(✯◡✯)',
+          '(◕‿◕)',
+          '(*≧ω≦*)',
+          '(☆▽☆)',
+          '(⌒‿⌒)',
+          '＼(≧▽≦)／',
+          'ヽ(o＾▽＾o)ノ',
+          "☆ ～('▽^人)",
+          '(*°▽°*)',
+          '٩(｡•́‿•̀｡)۶',
+          '(✧ω✧)',
+          'ヽ(*⌒▽⌒*)ﾉ',
+          '(´｡• ᵕ •｡)',
+          '( ´ ▽ )',
+          '(￣▽￣)',
+          '╰(*´︶)╯',
+          'ヽ(>∀<☆)ノ',
+          'o(≧▽≦)o',
+          '(☆ω☆)',
+          '(っ˘ω˘ς )',
+          '＼(￣▽￣)／',
+          '(¯︶¯)',
+          '＼(＾▽＾)／',
+          '٩(◕‿◕)۶',
+          '(o˘◡˘o)',
+          '(★ω★)/',
+          '(^ヮ^)/',
+          '(〃＾▽＾〃)',
+          '(╯✧▽✧)╯',
+          'o(>ω<)o',
+          'o( ❛ᴗ❛ )o',
+          '｡ﾟ(TヮT)ﾟ｡',
+          '( ‾́ ◡ ‾́ )',
+          '(ﾉ´ヮ)ﾉ*: ･ﾟ',
+          '(b ᵔ▽ᵔ)b',
+          '(๑˃ᴗ˂)ﻭ',
+          '(๑˘︶˘๑)',
+          '( ˙꒳​˙ )',
+          '(*꒦ິ꒳꒦ີ)',
+          '°˖✧◝(⁰▿⁰)◜✧˖°',
+          '(´･ᴗ･ )',
+          '(ﾉ◕ヮ◕)ﾉ:･ﾟ✧',
+          '(„• ֊ •„)',
+          '(.❛ ᴗ ❛.)',
+          '(⁀ᗢ⁀)',
+          '(￢‿￢ )',
+          '(¬‿¬ )',
+          '(￣▽￣)b',
+          '( ˙▿˙ )',
+          '(¯▿¯)',
+          '( ◕▿◕ )',
+          '＼(٥⁀▽⁀ )／',
+          '(„• ᴗ •„)',
+          '(ᵔ◡ᵔ)',
+          '( ´ ▿ )',
+          '(๑>◡<๑)',
+          '( = ⩊ = )',
+          '( ´ ꒳ )',
+          '⸜( ´ ꒳ )⸝',
+          '⸜(⸝⸝⸝´꒳⸝⸝⸝)⸝',
+          '⸜(ˊᗜˋ*)⸝',
+          '⸜( ˊᵕˋ )⸝',
+          '(>⩊<)',
+          '(ᗒ⩊ᗕ)',
+          '(ᵔ⩊ᵔ)',
+          '( ᵔ ⩊ ᵔ )',
+          '(•⩊•)',
+          '( • ⩊ • )',
+        ],
+        arrayObjects: [{ groupName: `${groupName}` }],
+      },
+    ])
+  ),
+}; // Объекты для кнопки смайликов
 
-buttonSmileGroup.elements.forEach((group) => {
-  group.addEventListener('mousedown', (event) => {
+const groupNameSmileForEvent = Object.values(buttonSmileGroup);
+
+groupNameSmileForEvent.forEach((group) => {
+  group.elements.addEventListener('mousedown', (event) => {
     const pressedButton = event.target;
-    const smileArray = buttonSmileGroup.smileArray;
-    const randomSmile = smileArray[Math.floor(Math.random() * smileArray.length)];
-    buttonSmileGroup.value = pressedButton.textContent = randomSmile;
+    const randomSmile = group.smileArray[Math.floor(Math.random() * group.smileArray.length)];
+    pressedButton.textContent = randomSmile;
 
-    buttonSmileGroup.groupName = event.target.dataset.class;
+    group.arrayObjects.forEach((object) => {
+      if (pressedButton.dataset.class == object.groupName) {
+        object.textValue = randomSmile;
+        group.arrayObjects.push(randomSmile);
+      }
+    });
 
     saveLocalStorage();
   });
@@ -314,10 +322,10 @@ buttonSmileGroup.elements.forEach((group) => {
 
 const buttonDeleteGroup = {
   elements: Array.from(document.getElementsByClassName('delete-btn')),
-  containerSucces: Array.from(document.getElementsByClassName('succes-delete')),
+  containerSucces: Array.from(document.getElementsByClassName('label-delete')),
   groupName: '',
   /* ----------------------------------------------------------- */
-  elementPhoto: document.querySelector('.imageMem'),
+  elementPhoto: document.querySelector('.image-mem'),
   /* ----------------------------------------------------------- */
 }; // Группа для окна/кнопок удаления
 
@@ -372,59 +380,71 @@ function succesDelete(event) {
 
 // Кнопки удаления
 
-const groupsForLocalStorage = [...Object.values(constructorKey), buttonSmileGroup, monthObject];
+const groupsForLocalStorage = [
+  ...Object.values(constructorKey),
+  ...Object.values(groupNameSmileForEvent),
+  monthObject,
+];
 
 function saveLocalStorage() {
-  const nameObject = groupsForLocalStorage.map((obj) => obj.name);
-  nameObject.forEach((group) => {
-    if (group === 'smile') {
-      const currentObject = groupsForLocalStorage.find((obj) => obj.name === 'smile');
-      if (currentObject?.groupName && currentObject.groupName !== '') {
-        localStorage.setItem(
-          `group_${group}_${currentObject.groupName}`,
-          JSON.stringify(currentObject.value)
-        );
-      }
-    } else if (group === 'month') {
-      const currentObject = groupsForLocalStorage.find((obj) => obj.name === 'month');
-      localStorage.setItem(`group_${group}`, JSON.stringify(currentObject.value));
+  console.clear();
+  groupsForLocalStorage.forEach((object) => {
+    const arrayObjects = object.arrayObjects;
+    const name = object.name;
+    localStorage.setItem(`item_${name}`, JSON.stringify(arrayObjects));
+
+    /* else if ('groupName' in object) {
+      const saveValue = [object.value];
+      const groupName = object.groupName;
+      const name = object.name;
+      localStorage.setItem(`item_${name}_${groupName}`, JSON.stringify(saveValue));
+      console.log(saveValue);
+    } else if (object.name == 'month') {
+      const saveValue = [object.value];
+      const name = object.name;
+      localStorage.setItem(`item_${name}`, JSON.stringify(saveValue));
+      console.log(saveValue);
     } else {
-      const currentObjectsGroup = groupsForLocalStorage.find((obj) => obj.name === group);
-      const currentObject = currentObjectsGroup.arrayObjects;
-      localStorage.setItem(`group_${group}`, JSON.stringify(currentObject));
-    }
+      console.log('Hello, world!');
+    } */
   });
 } // Функция сохранения в локальное хранилище
 
+saveLocalStorage();
+
 function loadLocalStorage() {
-  groupsForLocalStorage.forEach((group) => {
+  groupsForLocalStorage.forEach((object) => {
+    const name = object.name;
+    /* const loadValue = JSON.parse(localStorage.getItem(`item_${name}`)); */
+    /* console.log(name, loadValue); */
+  });
+  /*   groupsForLocalStorage.forEach((group) => {
     const arrayObjects = JSON.parse(localStorage.getItem(`group_${group.name}`));
 
     if (group.name === 'smile') {
-      // Загрузка значений кнопок эмоций
       const groupName = ['task', 'nodeadline'];
       groupName.forEach((classNeme) => {
         const loadValue = JSON.parse(localStorage.getItem(`group_${group.name}_${classNeme}`));
+        console.log(loadValue);
         const currentElement = document.querySelector(`[data-class="${classNeme}"]`);
 
         currentElement.textContent = loadValue;
       });
     } else if (group.name === 'month') {
-      // Загрузка значений поля ввода месяца
       const loadValue = JSON.parse(localStorage.getItem(`group_${group.name}`));
+      console.log(loadValue);
       const currentElement = document.getElementById('monthElement');
       currentElement.setAttribute('value', loadValue);
 
       currentElement.textContent = loadValue;
     } else {
-      const reversedArray = JSON.parse(localStorage.getItem(`group_${group.name}`));
-      const loadValue = [...reversedArray].reverse();
-      console.log(reversedArray);
-      console.log(loadValue);
-      if (loadValue !== null) {
+      const loadValue = JSON.parse(localStorage.getItem(`group_${group.name}`));
+
+      if (!loadValue.includes(null)) {
+        const reversedArray = [...loadValue].reverse();
         loadValue.forEach((element) => {
           group.arrayObjects = reversedArray;
-          const fragmentMain = document.createElement('div');
+          const fragmentMain = document.createElement('li');
           fragmentMain.className = group.baseClassName;
           fragmentMain.innerHTML = `
   <input type="checkbox" class="${group.checkboxClassName}" ${element.cbCheck ? 'checked' : ''}>
@@ -434,7 +454,7 @@ function loadLocalStorage() {
         });
       }
     }
-  });
+  }); */
 } // Функция чтения из локального хранилища
 
 loadLocalStorage(); // Вызов функции для загрузки и отображения данных
