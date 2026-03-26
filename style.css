@@ -39,7 +39,7 @@ body {
 } /* Группа переменных для цветов */
 
 .top-label,
-.tasks-label,
+.task-label,
 .nodeadline-label,
 .pretop-label,
 .label-text-week,
@@ -56,7 +56,7 @@ body {
   position: relative;
 } /* Расположение flex для основных кейсов*/
 
-.tasks-input,
+.task-input,
 .nodeadline-input,
 .monday-input,
 .tuesday-input,
@@ -203,7 +203,7 @@ body {
   z-index: 100;
 }
 
-.tasks-label,
+.task-label,
 .nodeadline-label {
   background-color: var(--color--backgtound--orange);
   width: 16vw;
@@ -244,7 +244,7 @@ body {
   height: auto;
 } /* Стиль для контейнера колонок ввода задач */
 
-.label-text-tasks,
+.label-text-task,
 .label-text-nodeadline {
   width: 30vw;
   height: 3vh;
@@ -256,7 +256,7 @@ body {
   margin: 4px 0 4px 0;
 } /* Стиль для контенера поля ввода и чекбокса */
 
-.tasks-input,
+.task-input,
 .nodeadline-input {
   background-color: var(--color--background--beige);
   width: 100%;
@@ -279,18 +279,18 @@ body {
 } /* Стиль для полей ввода задач */
 
 .nodeadline-cb:checked,
-.tasks-cb:checked,
+.task-cb:checked,
 .nodeadline-cb:checked + .nodeadline-input,
-.tasks-cb:checked + .tasks-input {
+.task-cb:checked + .task-input {
   background-color: var(--color--active--beige) !important;
   transform: translate(2px, 2px) !important;
 
   box-shadow: 0px 0px 0px var(--color--black) !important;
 } /* Стиль для чекбокса при активации. Связь с полями ввода */
 
-.tasks-input:focus,
+.task-input:focus,
 .nodeadline-input:focus,
-.label-text-tasks:has(.tasks-input:focus) .tasks-cb,
+.label-text-task:has(.task-input:focus) .task-cb,
 .label-text-nodeadline:has(.nodeadline-input:focus) .nodeadline-cb {
   background-color: var(--color--active--alt--beige);
   transform: translate(-2px, -2px);
@@ -302,7 +302,7 @@ body {
     4px 4px 3px var(--color--black);
 } /* Стили при активации полей ввода. Связь с чекбоксами */
 
-.tasks-cb,
+.task-cb,
 .nodeadline-cb {
   background-color: var(--color--background--beige);
   height: 100%;
@@ -322,7 +322,7 @@ body {
   margin: 0 6px 0 0;
 } /* Стиль для чекбокса */
 
-.tasks-cb:checked::after,
+.task-cb:checked::after,
 .nodeadline-cb:checked::after {
   width: 100%;
   height: 100%;

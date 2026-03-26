@@ -14,48 +14,180 @@ function createSubclass() {
   };
 } // Функция создания задач ObjectClass
 
-const daysWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
-// Ключи для дней календаря в constructorKey
+const daysWeekList = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+const questList = ['task', 'nodeadline'];
+const smileList = ['tasksmile', 'nodeadlinesmile'];
+const monthList = ['month'];
 
 const constructorKey = {
-  task: {
-    name: 'task',
-    type: 'Tasks',
-    baseClassName: 'label-text-tasks',
-    inputClassName: 'tasks-input',
-    checkboxClassName: 'tasks-cb',
-    inputs: document.getElementsByClassName('tasks-input'),
-    checkboxes: document.getElementsByClassName('tasks-cb'),
-    container: document.getElementById('tasksText'),
-    arrayObjects: [],
-  },
-  nodeadline: {
-    name: 'nodeadline',
-    type: 'Nodeadline',
-    baseClassName: 'label-text-nodeadline',
-    inputClassName: 'nodeadline-input',
-    checkboxClassName: 'nodeadline-cb',
-    inputs: document.getElementsByClassName('nodeadline-input'),
-    checkboxes: document.getElementsByClassName('nodeadline-cb'),
-    container: document.getElementById('nodeadlineText'),
-    arrayObjects: [],
-  },
   ...Object.fromEntries(
-    daysWeek.map((day) => [
-      day,
+    questList.map((item) => [
+      item,
       {
-        name: day,
-        type: day.charAt(0).toUpperCase() + day.slice(1),
-        baseClassName: `label-text-${day}`,
-        inputClassName: `${day}-input`,
-        checkboxClassName: 'checkbox-day-week',
-        inputs: document.getElementsByClassName(`${day}-input`),
-        checkboxes: document.getElementsByClassName('checkbox-day-week'),
-        container: document.getElementById(`${day}Text`),
+        name: item,
+        type: item.charAt(0).toUpperCase() + item.slice(0),
+
+        baseClassName: `label-text-${item}`,
+        inputClassName: `${item}-input`,
+        checkboxClassName: `${item}-cb`,
+
+        inputs: document.getElementsByClassName(`${item}-input`),
+        checkboxes: document.getElementsByClassName(`${item}-cb`),
+        container: document.getElementById(`${item}Text`),
+
         arrayObjects: [],
       },
     ])
   ),
+  ...Object.fromEntries(
+    daysWeekList.map((item) => [
+      item,
+      {
+        name: item,
+        type: item.charAt(0).toUpperCase() + item.slice(1),
+
+        baseClassName: `label-text-${item}`,
+        inputClassName: `${item}-input`,
+        checkboxClassName: 'checkbox-day-week',
+
+        inputs: document.getElementsByClassName(`${item}-input`),
+        checkboxes: document.getElementsByClassName('checkbox-day-week'),
+        container: document.getElementById(`${item}Text`),
+
+        arrayObjects: [],
+      },
+    ])
+  ),
+  ...Object.fromEntries(
+    smileList.map((item) => [
+      item,
+      {
+        name: item,
+        type: item.charAt(0).toUpperCase() + item.slice(0),
+        container: document.querySelector(`[data-class="${item}"]`),
+        smileArray: [
+          '(* ^ ω ^)',
+          '(´ ∀ *)',
+          '٩(◕‿◕｡)۶',
+          '☆*:.｡.o(≧▽≦)o.｡.:*☆',
+          '(o^▽^o)',
+          '(⌒▽⌒)☆',
+          '<(￣︶￣)>',
+          "。.:☆*:･'(*⌒―⌒*)))",
+          'ヽ(・∀・)ﾉ',
+          '(´｡• ω •｡)',
+          '(￣ω￣)',
+          '｀;:゛;｀;･(°ε° )',
+          '(o･ω･o)',
+          '(＠＾◡＾)',
+          'ヽ(・ω・)ﾉ',
+          '(o_ _)ﾉ彡☆',
+          '(^人^)',
+          '(o´▽o)',
+          '(*´▽)',
+          '｡ﾟ( ﾟ^∀^ﾟ)ﾟ｡',
+          '( ´ ω )',
+          '(((o(*°▽°*)o)))',
+          '(≧◡≦)',
+          '(o´∀o)',
+          '(´• ω •)',
+          '(＾▽＾)',
+          '(⌒ω⌒)',
+          '∑d(°∀°d)',
+          '╰(▔∀▔)╯',
+          '(─‿‿─)',
+          '(*^‿^*)',
+          'ヽ(o^ ^o)ﾉ',
+          '(✯◡✯)',
+          '(◕‿◕)',
+          '(*≧ω≦*)',
+          '(☆▽☆)',
+          '(⌒‿⌒)',
+          '＼(≧▽≦)／',
+          'ヽ(o＾▽＾o)ノ',
+          "☆ ～('▽^人)",
+          '(*°▽°*)',
+          '٩(｡•́‿•̀｡)۶',
+          '(✧ω✧)',
+          'ヽ(*⌒▽⌒*)ﾉ',
+          '(´｡• ᵕ •｡)',
+          '( ´ ▽ )',
+          '(￣▽￣)',
+          '╰(*´︶)╯',
+          'ヽ(>∀<☆)ノ',
+          'o(≧▽≦)o',
+          '(☆ω☆)',
+          '(っ˘ω˘ς )',
+          '＼(￣▽￣)／',
+          '(¯︶¯)',
+          '＼(＾▽＾)／',
+          '٩(◕‿◕)۶',
+          '(o˘◡˘o)',
+          '(★ω★)/',
+          '(^ヮ^)/',
+          '(〃＾▽＾〃)',
+          '(╯✧▽✧)╯',
+          'o(>ω<)o',
+          'o( ❛ᴗ❛ )o',
+          '｡ﾟ(TヮT)ﾟ｡',
+          '( ‾́ ◡ ‾́ )',
+          '(ﾉ´ヮ)ﾉ*: ･ﾟ',
+          '(b ᵔ▽ᵔ)b',
+          '(๑˃ᴗ˂)ﻭ',
+          '(๑˘︶˘๑)',
+          '( ˙꒳​˙ )',
+          '(*꒦ິ꒳꒦ີ)',
+          '°˖✧◝(⁰▿⁰)◜✧˖°',
+          '(´･ᴗ･ )',
+          '(ﾉ◕ヮ◕)ﾉ:･ﾟ✧',
+          '(„• ֊ •„)',
+          '(.❛ ᴗ ❛.)',
+          '(⁀ᗢ⁀)',
+          '(￢‿￢ )',
+          '(¬‿¬ )',
+          '(￣▽￣)b',
+          '( ˙▿˙ )',
+          '(¯▿¯)',
+          '( ◕▿◕ )',
+          '＼(٥⁀▽⁀ )／',
+          '(„• ᴗ •„)',
+          '(ᵔ◡ᵔ)',
+          '( ´ ▿ )',
+          '(๑>◡<๑)',
+          '( = ⩊ = )',
+          '( ´ ꒳ )',
+          '⸜( ´ ꒳ )⸝',
+          '⸜(⸝⸝⸝´꒳⸝⸝⸝)⸝',
+          '⸜(ˊᗜˋ*)⸝',
+          '⸜( ˊᵕˋ )⸝',
+          '(>⩊<)',
+          '(ᗒ⩊ᗕ)',
+          '(ᵔ⩊ᵔ)',
+          '( ᵔ ⩊ ᵔ )',
+          '(•⩊•)',
+          '( • ⩊ • )',
+        ],
+        arrayObjects: [],
+      },
+    ])
+  ),
+  ...Object.fromEntries(
+    monthList.map((item) => [
+      item,
+      {
+        name: item,
+        type: item.charAt(0).toUpperCase() + item.slice(0),
+        container: document.getElementById(`${item}Element`),
+        arrayObjects: [],
+      },
+    ])
+  ),
+  /* (
+  name: 'month',
+  input: document.getElementsByClassName('month-input'),
+  container: document.getElementById('monthElement'),
+  arrayObjects: [{}],
+) */
 }; // Группа для имен объектов задач
 
 const groupsForEvent = Object.values(constructorKey); // Массив для перебора групп объектов
@@ -182,124 +314,11 @@ monthObject.container.addEventListener('input', (event) => {
 
 // Блок для месяца
 
-const groupNameSmile = ['task', 'nodeadline']; // Массив для группы смайликов
+/* const groupNameSmile = ['task', 'nodeadline']; // Массив для группы смайликов
 
-const buttonSmileGroup = {
-  ...Object.fromEntries(
-    groupNameSmile.map((groupName) => [
-      groupName,
-      {
-        name: `smile_${groupName}`,
-        elements: document.querySelector(`[data-class="${groupName}"]`),
-        smileArray: [
-          '(* ^ ω ^)',
-          '(´ ∀ *)',
-          '٩(◕‿◕｡)۶',
-          '☆*:.｡.o(≧▽≦)o.｡.:*☆',
-          '(o^▽^o)',
-          '(⌒▽⌒)☆',
-          '<(￣︶￣)>',
-          "。.:☆*:･'(*⌒―⌒*)))",
-          'ヽ(・∀・)ﾉ',
-          '(´｡• ω •｡)',
-          '(￣ω￣)',
-          '｀;:゛;｀;･(°ε° )',
-          '(o･ω･o)',
-          '(＠＾◡＾)',
-          'ヽ(・ω・)ﾉ',
-          '(o_ _)ﾉ彡☆',
-          '(^人^)',
-          '(o´▽o)',
-          '(*´▽)',
-          '｡ﾟ( ﾟ^∀^ﾟ)ﾟ｡',
-          '( ´ ω )',
-          '(((o(*°▽°*)o)))',
-          '(≧◡≦)',
-          '(o´∀o)',
-          '(´• ω •)',
-          '(＾▽＾)',
-          '(⌒ω⌒)',
-          '∑d(°∀°d)',
-          '╰(▔∀▔)╯',
-          '(─‿‿─)',
-          '(*^‿^*)',
-          'ヽ(o^ ^o)ﾉ',
-          '(✯◡✯)',
-          '(◕‿◕)',
-          '(*≧ω≦*)',
-          '(☆▽☆)',
-          '(⌒‿⌒)',
-          '＼(≧▽≦)／',
-          'ヽ(o＾▽＾o)ノ',
-          "☆ ～('▽^人)",
-          '(*°▽°*)',
-          '٩(｡•́‿•̀｡)۶',
-          '(✧ω✧)',
-          'ヽ(*⌒▽⌒*)ﾉ',
-          '(´｡• ᵕ •｡)',
-          '( ´ ▽ )',
-          '(￣▽￣)',
-          '╰(*´︶)╯',
-          'ヽ(>∀<☆)ノ',
-          'o(≧▽≦)o',
-          '(☆ω☆)',
-          '(っ˘ω˘ς )',
-          '＼(￣▽￣)／',
-          '(¯︶¯)',
-          '＼(＾▽＾)／',
-          '٩(◕‿◕)۶',
-          '(o˘◡˘o)',
-          '(★ω★)/',
-          '(^ヮ^)/',
-          '(〃＾▽＾〃)',
-          '(╯✧▽✧)╯',
-          'o(>ω<)o',
-          'o( ❛ᴗ❛ )o',
-          '｡ﾟ(TヮT)ﾟ｡',
-          '( ‾́ ◡ ‾́ )',
-          '(ﾉ´ヮ)ﾉ*: ･ﾟ',
-          '(b ᵔ▽ᵔ)b',
-          '(๑˃ᴗ˂)ﻭ',
-          '(๑˘︶˘๑)',
-          '( ˙꒳​˙ )',
-          '(*꒦ິ꒳꒦ີ)',
-          '°˖✧◝(⁰▿⁰)◜✧˖°',
-          '(´･ᴗ･ )',
-          '(ﾉ◕ヮ◕)ﾉ:･ﾟ✧',
-          '(„• ֊ •„)',
-          '(.❛ ᴗ ❛.)',
-          '(⁀ᗢ⁀)',
-          '(￢‿￢ )',
-          '(¬‿¬ )',
-          '(￣▽￣)b',
-          '( ˙▿˙ )',
-          '(¯▿¯)',
-          '( ◕▿◕ )',
-          '＼(٥⁀▽⁀ )／',
-          '(„• ᴗ •„)',
-          '(ᵔ◡ᵔ)',
-          '( ´ ▿ )',
-          '(๑>◡<๑)',
-          '( = ⩊ = )',
-          '( ´ ꒳ )',
-          '⸜( ´ ꒳ )⸝',
-          '⸜(⸝⸝⸝´꒳⸝⸝⸝)⸝',
-          '⸜(ˊᗜˋ*)⸝',
-          '⸜( ˊᵕˋ )⸝',
-          '(>⩊<)',
-          '(ᗒ⩊ᗕ)',
-          '(ᵔ⩊ᵔ)',
-          '( ᵔ ⩊ ᵔ )',
-          '(•⩊•)',
-          '( • ⩊ • )',
-        ],
-        arrayObjects: [{ groupName: `${groupName}` }],
-      },
-    ])
-  ),
-}; // Объекты для кнопки смайликов
+const buttonSmileGroup = {}; // Объекты для кнопки смайликов
 
-const groupNameSmileForEvent = Object.values(buttonSmileGroup);
+const groupNameSmileForEvent = Object.values(constructorKey);
 
 groupNameSmileForEvent.forEach((group) => {
   group.elements.addEventListener('mousedown', (event) => {
@@ -310,7 +329,6 @@ groupNameSmileForEvent.forEach((group) => {
     group.arrayObjects.forEach((object) => {
       if (pressedButton.dataset.class == object.groupName) {
         object.textValue = randomSmile;
-        group.arrayObjects.push(randomSmile);
       }
     });
 
@@ -318,7 +336,7 @@ groupNameSmileForEvent.forEach((group) => {
   });
 }); // Обработчик событий и рандомайзер смайлика
 
-// Кнопка для смайлика
+// Кнопка для смайлика */
 
 const buttonDeleteGroup = {
   elements: Array.from(document.getElementsByClassName('delete-btn')),
@@ -380,82 +398,17 @@ function succesDelete(event) {
 
 // Кнопки удаления
 
-const groupsForLocalStorage = [
-  ...Object.values(constructorKey),
-  ...Object.values(groupNameSmileForEvent),
-  monthObject,
-];
+const groupsForLocalStorage = [...Object.values(constructorKey), monthObject]; // Группа обьектов для функций локального хранилища
 
 function saveLocalStorage() {
-  console.clear();
   groupsForLocalStorage.forEach((object) => {
     const arrayObjects = object.arrayObjects;
     const name = object.name;
     localStorage.setItem(`item_${name}`, JSON.stringify(arrayObjects));
-
-    /* else if ('groupName' in object) {
-      const saveValue = [object.value];
-      const groupName = object.groupName;
-      const name = object.name;
-      localStorage.setItem(`item_${name}_${groupName}`, JSON.stringify(saveValue));
-      console.log(saveValue);
-    } else if (object.name == 'month') {
-      const saveValue = [object.value];
-      const name = object.name;
-      localStorage.setItem(`item_${name}`, JSON.stringify(saveValue));
-      console.log(saveValue);
-    } else {
-      console.log('Hello, world!');
-    } */
   });
 } // Функция сохранения в локальное хранилище
 
-saveLocalStorage();
-
-function loadLocalStorage() {
-  groupsForLocalStorage.forEach((object) => {
-    const name = object.name;
-    /* const loadValue = JSON.parse(localStorage.getItem(`item_${name}`)); */
-    /* console.log(name, loadValue); */
-  });
-  /*   groupsForLocalStorage.forEach((group) => {
-    const arrayObjects = JSON.parse(localStorage.getItem(`group_${group.name}`));
-
-    if (group.name === 'smile') {
-      const groupName = ['task', 'nodeadline'];
-      groupName.forEach((classNeme) => {
-        const loadValue = JSON.parse(localStorage.getItem(`group_${group.name}_${classNeme}`));
-        console.log(loadValue);
-        const currentElement = document.querySelector(`[data-class="${classNeme}"]`);
-
-        currentElement.textContent = loadValue;
-      });
-    } else if (group.name === 'month') {
-      const loadValue = JSON.parse(localStorage.getItem(`group_${group.name}`));
-      console.log(loadValue);
-      const currentElement = document.getElementById('monthElement');
-      currentElement.setAttribute('value', loadValue);
-
-      currentElement.textContent = loadValue;
-    } else {
-      const loadValue = JSON.parse(localStorage.getItem(`group_${group.name}`));
-
-      if (!loadValue.includes(null)) {
-        const reversedArray = [...loadValue].reverse();
-        loadValue.forEach((element) => {
-          group.arrayObjects = reversedArray;
-          const fragmentMain = document.createElement('li');
-          fragmentMain.className = group.baseClassName;
-          fragmentMain.innerHTML = `
-  <input type="checkbox" class="${group.checkboxClassName}" ${element.cbCheck ? 'checked' : ''}>
-    <input type="text" class= "${group.inputClassName}" value= "${element.text}" ${element.cbCheck ? 'style="text-decoration: line-through;"' : 'style="textDecoration: none;"'}>`;
-          fragmentMain.dataset.id = element.id;
-          group.container.insertAdjacentElement('afterbegin', fragmentMain);
-        });
-      }
-    }
-  }); */
-} // Функция чтения из локального хранилища
+function loadLocalStorage() {} // Функция чтения из локального хранилища
 
 loadLocalStorage(); // Вызов функции для загрузки и отображения данных
 
