@@ -22,7 +22,7 @@
             data-class="tasksmile"
             aria-label="Выбрать случайный смайлик"
           ></button>
-          <button class="delete-btn" id="task" data-name="task" aria-label="Удалить все задачи">
+          <button class="button-delete" data-name="task-delete" aria-label="Удалить все задачи">
             ✕
           </button>
         </div>
@@ -34,7 +34,11 @@
             data-class="nodeadlinesmile"
             aria-label="Выбрать случайный смайлик"
           ></button>
-          <button class="delete-btn" data-name="nodeadline" aria-label="Удалить все задачи">
+          <button
+            class="button-delete"
+            data-name="nodeadline-delete"
+            aria-label="Удалить все задачи"
+          >
             ✕
           </button>
         </div>
@@ -120,13 +124,14 @@
       </section>
       <!-- Колонки задач для дней недели -->
     </main>
-    <dialog class="label-delete">
+    <div class="label-delete">
       <h2></h2>
       <img class="image-mem" alt="Мем фото" />
       <div class="buttons-succes">
-        <button data-type="yes">Yes</button> <button data-type="no">No</button>
+        <button data-type="button-change" id="yes">Yes</button>
+        <button data-type="button-change" id="no">No</button>
       </div>
-    </dialog>
+    </div>
     <!-- Окно удаления -->
 
     <script src="script.js"></script>

@@ -286,6 +286,7 @@ body {
   transform: translate(2px, 2px) !important;
 
   box-shadow: 0px 0px 0px var(--color--black) !important;
+  text-decoration: line-through;
 } /* Стиль для чекбокса при активации. Связь с полями ввода */
 
 .task-input:focus,

@@ -1,5 +1,5 @@
 class ObjectClass {
-  constructor(text, id) {
+  constructor(text) {
     this.text = text;
   }
 } // Общий класс задач с значениями текста и чекбокса
@@ -18,6 +18,7 @@ const daysWeekList = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 's
 const questList = ['task', 'nodeadline'];
 const smileList = ['tasksmile', 'nodeadlinesmile'];
 const monthList = ['month'];
+const deleteFunctionList = ['task-delete', 'nodeadline-delete'];
 
 const constructorKey = {
   ...Object.fromEntries(
@@ -25,7 +26,7 @@ const constructorKey = {
       item,
       {
         name: item,
-        type: item.charAt(0).toUpperCase() + item.slice(0),
+        type: item.charAt(0).toUpperCase() + item.slice(1),
 
         baseClassName: `label-text-${item}`,
         inputClassName: `${item}-input`,
@@ -38,7 +39,7 @@ const constructorKey = {
         arrayObjects: [],
       },
     ])
-  ),
+  ), // questList
   ...Object.fromEntries(
     daysWeekList.map((item) => [
       item,
@@ -57,13 +58,13 @@ const constructorKey = {
         arrayObjects: [],
       },
     ])
-  ),
+  ), // daysWeekList
   ...Object.fromEntries(
     smileList.map((item) => [
       item,
       {
         name: item,
-        type: item.charAt(0).toUpperCase() + item.slice(0),
+        type: item.charAt(0).toUpperCase() + item.slice(1),
         container: document.querySelector(`[data-class="${item}"]`),
         smileArray: [
           '(* ^ ω ^)',
@@ -170,106 +171,151 @@ const constructorKey = {
         arrayObjects: [],
       },
     ])
-  ),
+  ), // smileList
   ...Object.fromEntries(
     monthList.map((item) => [
       item,
       {
         name: item,
-        type: item.charAt(0).toUpperCase() + item.slice(0),
+        type: item.charAt(0).toUpperCase() + item.slice(1),
         container: document.getElementById(`${item}Element`),
         arrayObjects: [],
       },
     ])
-  ),
-  /* (
-  name: 'month',
-  input: document.getElementsByClassName('month-input'),
-  container: document.getElementById('monthElement'),
-  arrayObjects: [{}],
-) */
+  ), // monthList
+  ...Object.fromEntries(
+    deleteFunctionList.map((item) => [
+      item,
+      {
+        name: item,
+        type: item.charAt(0).toUpperCase() + item.slice(1),
+        list: item.slice(0, -7),
+
+        container: document.querySelector(`[data-name="${item}"]`),
+        label: document.querySelector(`.label-delete`),
+        elements: document.querySelectorAll('[data-type="button-change"]'),
+      },
+    ])
+  ), // deleteFunctionList
 }; // Группа для имен объектов задач
 
-const groupsForEvent = Object.values(constructorKey); // Массив для перебора групп объектов
+const arrayAllObject = Object.values(constructorKey); // Массив для перебора групп объектов
 
-groupsForEvent.forEach((group) => {
+arrayAllObject.forEach((group) => {
   group.container.addEventListener('input', (event) => {
     if (!event.target.matches('input[type="text"]')) return;
-    const valuesTargetElement = getValue(event);
-    updateObject(group, valuesTargetElement);
-    deleteElement(group, valuesTargetElement, event);
-    saveLocalStorage();
-    messageLog();
+
+    if (daysWeekList.includes(group.name) || questList.includes(group.name)) {
+      const valuesTargetElement = getValue(event);
+      updateObject(group, valuesTargetElement);
+      deleteElement(group, valuesTargetElement, event);
+      saveLocalStorage(group);
+    } else if (monthList.includes(group.name)) {
+      updataMonth(group, event);
+      saveLocalStorage(group);
+    }
   });
   group.container.addEventListener('change', (event) => {
     if (!event.target.matches('input[type="checkbox"]')) return;
-    checkboxUpdateStyle(group, event);
-    saveLocalStorage();
-    messageLog();
+
+    if (questList.includes(group.name)) {
+      checkboxUpdateStyle(group, event);
+      saveLocalStorage(group);
+    }
   });
-}); // Обработчик событий для задач
+  group.container.addEventListener('click', (event) => {
+    if (!event.target.matches('button')) return;
+
+    if (smileList.includes(group.name)) {
+      updataSmile(group, event);
+      saveLocalStorage(group);
+    }
+    if (deleteFunctionList.includes(group.name)) {
+      updataDelete(group);
+      labelDeleteImage();
+    }
+  });
+}); // Обработчик событий
 
 function getValue(event) {
   const currentElement = event.target;
+
   const cardElement = currentElement.closest('[data-id]');
   const inputElement = currentElement.closest('input[type="text"]');
+  const checkboxElement = cardElement.querySelector('input[type="checkbox"]');
+
   const inputId = cardElement.dataset.id;
   const inputObject = inputElement.value;
-  cardElement.querySelector('input[type="checkbox"]');
-  const checkboxElement = cardElement.querySelector('input[type="checkbox"]');
   const checkboxObject = checkboxElement.checked;
+
   return { inputId, inputObject, checkboxObject, cardElement, currentElement };
-} // Функция получение данных из HTML в реальном времени
+} // Функция получение данных из HTML в реальном времени days quest
 
 function createElement(group) {
   const config = constructorKey[group.name];
+  const idElement = crypto.randomUUID();
+
   const fragmentMain = document.createElement('li');
   fragmentMain.className = config.baseClassName;
-  const idElement = crypto.randomUUID();
-  fragmentMain.innerHTML = `
-  <input type="checkbox" class= ${config.checkboxClassName}>
-    <input type="text" class= ${config.inputClassName}>`;
   fragmentMain.dataset.id = idElement;
 
-  config.container.insertAdjacentElement('beforeend', fragmentMain);
-} // Функция создания элементов
+  const inputElement = document.createElement('input');
+  inputElement.type = 'text';
+  inputElement.className = group.inputClassName;
 
-groupsForEvent.forEach((group) => {
-  createElement(group);
-}); // Создание первых элементов
+  const checkboxElement = document.createElement('input');
+  checkboxElement.type = 'checkbox';
+  checkboxElement.className = group.checkboxClassName;
+
+  fragmentMain.appendChild(checkboxElement);
+  fragmentMain.appendChild(inputElement);
+
+  config.container.insertAdjacentElement('beforeend', fragmentMain);
+} // Функция создания элементов days quest
+
+arrayAllObject.forEach((group) => {
+  if (daysWeekList.includes(group.name) || questList.includes(group.name)) {
+    createElement(group);
+  }
+}); // Создание первых элементов days quest
 
 function createObject(group, valuesTargetElement) {
+  const config = constructorKey[group.name];
+
   const inputId = valuesTargetElement.inputId;
   const inputValue = valuesTargetElement.inputObject;
   const checkboxValue = valuesTargetElement.checkboxObject;
-  const config = constructorKey[group.name];
+
   const nameObject = createSubclass();
 
   const objectClass = new nameObject(inputValue, checkboxValue, inputId);
   config.arrayObjects.push(objectClass);
   return { objectClass };
-} // Создание объекта и добавление его в массив
+} // Создание объекта и добавление его в массив days quest
 
 function checkboxUpdateStyle(group, event) {
   const config = constructorKey[group.name];
-  const idArray = config.arrayObjects;
   const currentElement = event.target;
+
   const cardElement = currentElement.closest('[data-id]');
+  const idArray = config.arrayObjects;
   const inputId = cardElement.dataset.id;
-  const realId = idArray.find((item) => item.id === inputId);
   const checkboxObject = currentElement.checked;
 
+  const realId = idArray.find((item) => item.id === inputId);
   if (realId) {
     realId.cbCheck = checkboxObject;
   }
-} // Изменение стиля текста при активации чекбокса и обновление чекбокса в объекте
+} // Изменение стиля текста при активации чекбокса и обновление чекбокса в объекте days quest
 
 function updateObject(group, valuesTargetElement) {
   const config = constructorKey[group.name];
+
   const idArray = config.arrayObjects;
   const checkId = valuesTargetElement.inputId;
-  const realId = idArray.find((item) => item.id === checkId);
   const inputObject = valuesTargetElement.inputObject;
+
+  const realId = idArray.find((item) => item.id === checkId);
 
   if (realId) {
     realId.text = inputObject;
@@ -277,7 +323,7 @@ function updateObject(group, valuesTargetElement) {
     createElement(group);
     createObject(group, valuesTargetElement);
   }
-} // Редактирование объекта и создание объекта/DOM элемента
+} // Редактирование объекта и создание объекта/DOM элемента days quest
 
 function deleteElement(group, valuesTargetElement) {
   const config = constructorKey[group.name];
@@ -289,138 +335,124 @@ function deleteElement(group, valuesTargetElement) {
   currentElement.addEventListener('blur', () => {
     if (currentElement.value == '') {
       config.arrayObjects = config.arrayObjects.filter((item) => item.id !== checkId);
+      localStorage.removeItem(`item_${group.name}`);
       cardElement.remove();
     }
   });
-} // Проверка и удаление пустых обьектов
+} // Проверка и удаление пустых обьектов days quest
 
-// Блок для строк задач и календаря
-
-const monthObject = {
-  name: 'month',
-  input: document.getElementsByClassName('month-input'),
-  container: document.getElementById('monthElement'),
-  arrayObjects: [{}],
-}; // Объект для работы с элементом месяца
-
-monthObject.container.addEventListener('input', (event) => {
+function updataMonth(group, event) {
+  const config = constructorKey[group.name];
   const currentElement = event.target;
-  monthObject.value = currentElement.value;
-  monthObject.arrayObjects[0].month = currentElement.value;
 
-  messageLog();
-  saveLocalStorage();
-}); // Обработчик событий на поле ввода месяца
+  const textValue = currentElement.value;
+  const monthObject = new ObjectClass(textValue);
 
-// Блок для месяца
+  const arrayObjects = config.arrayObjects;
+  arrayObjects.length = 0;
+  arrayObjects.push(monthObject);
 
-/* const groupNameSmile = ['task', 'nodeadline']; // Массив для группы смайликов
+  currentElement.addEventListener('blur', () => {
+    if (currentElement.value == '') {
+      localStorage.removeItem(`item_${group.name}`);
+    }
+  });
+} // Обработка поля ввода месяца month
 
-const buttonSmileGroup = {}; // Объекты для кнопки смайликов
+function updataSmile(group, event) {
+  const config = constructorKey[group.name];
+  const currentElement = event.target;
 
-const groupNameSmileForEvent = Object.values(constructorKey);
+  const randomSmile = group.smileArray[Math.floor(Math.random() * group.smileArray.length)];
+  currentElement.textContent = randomSmile;
+  const smileObject = new ObjectClass(randomSmile);
 
-groupNameSmileForEvent.forEach((group) => {
-  group.elements.addEventListener('mousedown', (event) => {
-    const pressedButton = event.target;
-    const randomSmile = group.smileArray[Math.floor(Math.random() * group.smileArray.length)];
-    pressedButton.textContent = randomSmile;
+  const arrayObjects = config.arrayObjects;
+  arrayObjects.length = 0;
+  arrayObjects.push(smileObject);
+} // Обработка кнопки смайла smile
 
-    group.arrayObjects.forEach((object) => {
-      if (pressedButton.dataset.class == object.groupName) {
-        object.textValue = randomSmile;
+function updataDelete(group) {
+  const config = constructorKey[group.name];
+  const configObject = constructorKey[group.list];
+
+  const elementText = config.label.querySelector('h2');
+  elementText.textContent = `Do you confirm the ${group.list} clearing?`;
+
+  config.label.style.display = 'block';
+
+  group.elements.forEach((element) => {
+    element.onclick = () => {
+      if (element.id == 'yes') {
+        configObject.arrayObjects.length = 0;
+        configObject.container.replaceChildren();
+        localStorage.removeItem(`item_${group.list}`);
+
+        createElement(configObject);
+        config.label.style.display = 'none';
+      } else if (element.id == 'no') {
+        config.label.style.display = 'none';
       }
-    });
-
-    saveLocalStorage();
+    };
   });
-}); // Обработчик событий и рандомайзер смайлика
+} // Обработка функций удаления delete
 
-// Кнопка для смайлика */
+function labelDeleteImage() {
+  const elementImage = document.querySelector('.image-mem');
+  const arrayImage = ['galery/evreilev.jpg', 'galery/dedinmirror.jpg'];
 
-const buttonDeleteGroup = {
-  elements: Array.from(document.getElementsByClassName('delete-btn')),
-  containerSucces: Array.from(document.getElementsByClassName('label-delete')),
-  groupName: '',
-  /* ----------------------------------------------------------- */
-  elementPhoto: document.querySelector('.image-mem'),
-  /* ----------------------------------------------------------- */
-}; // Группа для окна/кнопок удаления
+  const randomPhoto = arrayImage[Math.floor(Math.random() * arrayImage.length)];
+  elementImage.src = randomPhoto;
+} // Случайная вставка фото в окно удаления delete
 
-buttonDeleteGroup.elements.forEach((elements) => {
-  elements.addEventListener('click', (event) => {
-    updateModalWindow(event);
-    messageLog();
-  });
-}); //Обработчик событий для вызова модального окна
+function saveLocalStorage(object) {
+  const saveArray = object.arrayObjects;
+  const name = object.name;
 
-function updateModalWindow(event) {
-  const containerSucces = buttonDeleteGroup.containerSucces[0];
-  containerSucces.style.display = 'block';
-
-  const targetClass = event.target.dataset.name;
-  buttonDeleteGroup.groupName = targetClass;
-
-  const heading = containerSucces.querySelector('h2');
-  heading.textContent = `Do you confirm the ${targetClass} clearing?`;
-  /* ----------------------------------------------------------- */
-  const arrPhoto = ['galery/evreilev.jpg', 'galery/dedinmirror.jpg'];
-  const elementPhoto = buttonDeleteGroup.elementPhoto;
-  const randomPhoto = arrPhoto[Math.floor(Math.random() * arrPhoto.length)];
-  elementPhoto.src = randomPhoto;
-  /* ----------------------------------------------------------- */
-} // Функция вызова модального окна
-
-buttonDeleteGroup.containerSucces.forEach((elements) => {
-  elements.addEventListener('click', (event) => {
-    succesDelete(event);
-    messageLog();
-  });
-}); // Обработчик событий для подтверждения удаления
-
-function succesDelete(event) {
-  const type = event.target.dataset.type;
-  const containerSucces = buttonDeleteGroup.containerSucces[0];
-  const groupName = buttonDeleteGroup.groupName;
-
-  if (type == 'yes') {
-    const currentClass = constructorKey[groupName];
-    currentClass.arrayObjects.length = 0;
-    const parentContainer = document.querySelector(`.column-${groupName}`);
-    parentContainer.replaceChildren();
-    createElement(constructorKey[groupName]);
-    containerSucces.style.display = 'none';
-    localStorage.removeItem(`group_${groupName}`);
-  } else if (type == 'no') {
-    containerSucces.style.display = 'none';
-  }
-} // Функция подтверждения удаления и очистки массива объектов/локального хранилища => закрытие модального окна
-
-// Кнопки удаления
-
-const groupsForLocalStorage = [...Object.values(constructorKey), monthObject]; // Группа обьектов для функций локального хранилища
-
-function saveLocalStorage() {
-  groupsForLocalStorage.forEach((object) => {
-    const arrayObjects = object.arrayObjects;
-    const name = object.name;
-    localStorage.setItem(`item_${name}`, JSON.stringify(arrayObjects));
-  });
+  localStorage.setItem(`item_${name}`, JSON.stringify(saveArray));
 } // Функция сохранения в локальное хранилище
 
-function loadLocalStorage() {} // Функция чтения из локального хранилища
+function loadLocalStorage() {
+  arrayAllObject.forEach((object) => {
+    if ('arrayObjects' in object) {
+      const loadArray = JSON.parse(localStorage.getItem(`item_${object.name}`));
+
+      if (loadArray != null) {
+        object.arrayObjects = loadArray;
+        if (daysWeekList.includes(object.name) || questList.includes(object.name)) {
+          const reversedArray = [...loadArray].reverse();
+
+          reversedArray.forEach((loadObject) => {
+            const fragmentMain = document.createElement('li');
+            fragmentMain.className = object.baseClassName;
+            fragmentMain.dataset.id = loadObject.id;
+
+            const checkboxElement = document.createElement('input');
+            checkboxElement.type = 'checkbox';
+            checkboxElement.className = object.checkboxClassName;
+            checkboxElement.checked = loadObject.cbCheck;
+
+            const inputElement = document.createElement('input');
+            inputElement.type = 'text';
+            inputElement.className = object.inputClassName;
+            inputElement.value = loadObject.text;
+
+            fragmentMain.appendChild(checkboxElement);
+            fragmentMain.appendChild(inputElement);
+
+            object.container.insertAdjacentElement('afterbegin', fragmentMain);
+          });
+        } else if (monthList.includes(object.name)) {
+          const loadObject = loadArray[0];
+          object.container.value = loadObject.text;
+        }
+        if (smileList.includes(object.name)) {
+          const loadObject = loadArray[0];
+          object.container.textContent = loadObject.text;
+        }
+      }
+    }
+  });
+} // Функция чтения из локального хранилища
 
 loadLocalStorage(); // Вызов функции для загрузки и отображения данных
-
-function messageLog() {
-  /*   console.clear(); */
-  /*   groupsForEvent.forEach((group) => {
-    console.table(group.arrayObjects);
-  }); */
-  /*   const keys = Object.keys(localStorage);
-  keys.forEach((key) => {
-    const value = JSON.parse(localStorage.getItem(key));
-    console.log(value);
-  }); */
-} // Логирование данных
-messageLog();
