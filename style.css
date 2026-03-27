@@ -1,6 +1,6 @@
 @font-face {
   font-family: 'GNF';
-  src: url('../fonts/GNF.ttf') format('truetype');
+  src: url('fonts/GNF.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
   font-display: swap;
@@ -38,7 +38,6 @@ body {
   --color--active--alt--beige: rgb(254, 250, 243);
 } /* Группа переменных для цветов */
 
-.top-label,
 .task-label,
 .nodeadline-label,
 .pretop-label,
@@ -133,9 +132,22 @@ body {
 
   width: 25vh;
 }
+.top-label {
+  display: flex;
+
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.top-label div {
+  display: grid;
+
+  place-items: center;
+}
+
 .top-label h1 {
   background-color: var(--color--backgtound--orange);
-  width: 18vw;
+  width: 20vw;
   height: 10vh;
 
   display: flex;
@@ -144,13 +156,11 @@ body {
 
   border: solid 3px var(--color--black);
   box-shadow: 8px 8px 3px var(--color--shadow-orange);
-
-  margin: 2vh 10vw 2vh 10vw;
 } /* Стиль для заголовка программы */
 
 .top-label input {
   background-color: var(--color--background--beige);
-  width: 20vw;
+  width: 16vw;
   height: 9vh;
 
   display: flex;
@@ -170,10 +180,25 @@ body {
 
   font-size: 1.9rem;
   color: var(--color--black);
-  text-indent: 5vw;
+  padding-left: 5vw;
 
-  margin: 2vh 10vw 2vh 10vw;
+  grid-row: 1;
+  grid-column: 1;
 } /* Стиль для ввода месяца */
+
+.top-label span {
+  transition: transform 0.3s ease;
+
+  transform: translateX(-8vw);
+
+  font-size: 1.9rem;
+  color: var(--color--grey);
+
+  z-index: 100;
+
+  grid-row: 1;
+  grid-column: 1;
+}
 
 .top-label input:focus {
   background-color: var(--color--active--alt--beige);
@@ -187,21 +212,8 @@ body {
 } /* Стиль при активации поля ввода */
 
 .top-label input:focus + span {
-  transform: translate(-2px, -2px);
+  transform: translate(calc(-8vw - 2px), -2px);
 } /* Стиль для спан при фокусе на поле ввода */
-
-.top-label span {
-  position: absolute;
-  top: 5.25vh;
-  right: 30.75vw;
-
-  transition: transform 0.3s ease;
-
-  font-size: 2rem;
-  color: var(--color--grey);
-
-  z-index: 100;
-}
 
 .task-label,
 .nodeadline-label {
@@ -303,43 +315,42 @@ body {
     4px 4px 3px var(--color--black);
 } /* Стили при активации полей ввода. Связь с чекбоксами */
 
-.task-cb,
-.nodeadline-cb {
-  background-color: var(--color--background--beige);
-  height: 100%;
-  aspect-ratio: 1 / 1;
-
-  border: solid 2px var(--color--black);
-  box-shadow:
-    2px 2px var(--color--shadow--beige),
-    2px 2px 3px var(--color--black);
-  border-radius: 6px;
-
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.3s ease;
-
-  margin: 0 6px 0 0;
-} /* Стиль для чекбокса */
-
 .task-cb:checked::after,
 .nodeadline-cb:checked::after {
   width: 100%;
   height: 100%;
   content: '✔';
-
   position: absolute;
   font-weight: 100;
-  top: -1.2vh;
-  /* left: -0.2vw; */
-
-  font-size: 2.6rem;
+  font-size: 2.2rem;
   text-align: center;
-  padding: 0 0 0 0;
 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
   color: var(--color--black);
-} /* Стиль для чекбокса после активации */
+} /* Стиль для состояния при активации */
+
+.task-cb,
+.nodeadline-cb {
+  background-color: var(--color--background--beige);
+  height: 100%;
+  aspect-ratio: 1 / 1;
+  border: solid 2px var(--color--black);
+  box-shadow:
+    2px 2px var(--color--shadow--beige),
+    2px 2px 3px var(--color--black);
+  border-radius: 6px;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.3s ease;
+  margin: 0 6px 0 0;
+
+  position: relative;
+} /* Стиль для чекбокса */
 
 .days-week {
   width: 100%;
@@ -350,8 +361,7 @@ body {
   justify-self: center;
 
   letter-spacing: 2px;
-
-  margin: 2vh 0 0 0;
+  padding: 0;
 } /* Стиль для контейнера заголовков дней недели */
 
 .days-week li {
