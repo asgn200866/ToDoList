@@ -29,7 +29,7 @@ body {
   --color--grey: rgb(162, 162, 162);
   --color--white: rgb(256, 256, 256);
   --color-yellow: rgb(255, 193, 0);
-  --color--backgtound--orange: rgb(244, 191, 95);
+  --color--background--orange: rgb(244, 191, 95);
   --color--shadow-orange: rgb(150, 109, 85);
 
   --color--background--beige: rgb(248, 235, 216);
@@ -38,40 +38,9 @@ body {
   --color--active--alt--beige: rgb(254, 250, 243);
 } /* Группа переменных для цветов */
 
-.task-label,
-.nodeadline-label,
-.pretop-label,
-.label-text-week,
-.label-text-quests,
-.days-week,
-.week,
-.month {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-
-  align-items: flex-start;
-
-  position: relative;
-} /* Расположение flex для основных кейсов*/
-
-.task-input,
-.nodeadline-input,
-.monday-input,
-.tuesday-input,
-.wednesday-input,
-.thursday-input,
-.friday-input,
-.saturday-input,
-.sunday-input {
-  width: 12vw;
-  text-decoration: none;
-  color: var(--color--black);
-} /* Расположение flex для полей ввода */
-
-.checkbox-day-week {
-  display: none;
-} /* Стиль для чекбокса дней календаря. Скрыт */
+/* ============================================ */
+/* === label-delete === */
+/* ============================================ */
 
 .label-delete {
   position: fixed;
@@ -83,18 +52,24 @@ body {
 
   background-color: var(--color--background--beige);
   border: solid 3px var(--color--black);
-  border-radius: 40px;
-  display: none;
+  border-radius: 2rem;
+  visibility: hidden;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
 
   z-index: 100;
+  padding: 5vh;
+
+  overflow: hidden;
 } /* Основное окно подтверждения очистки списков */
 
 .label-delete h2 {
   width: 20vw;
   height: 4vh;
-
-  margin: 4vh 14vw 0 14vw;
-} /* Стиль для текат в оке удаления */
+} /* Стиль для текста в оке удаления */
 
 .buttons-succes {
   width: 40vw;
@@ -104,7 +79,7 @@ body {
   justify-content: center;
   align-items: center;
 
-  margin: 30vh 4vw 0 4vw;
+  gap: 6vw;
 } /* Стиль для контейнера кнопок да/нет */
 
 .buttons-succes button {
@@ -116,8 +91,6 @@ body {
 
   border: solid 2px var(--color--black);
   border-radius: 20px;
-
-  margin: 0 4vw 0 4vw;
 } /* Стиль для кнопок да/нет */
 
 .buttons-succes button:hover {
@@ -125,28 +98,29 @@ body {
 } /* Стиль при наведении на кнопки да/нет */
 
 .label-delete img {
-  position: absolute;
-  top: 10vh;
-  left: 50%;
-  transform: translateX(-50%);
-
-  width: 25vh;
+  width: 30vh;
 }
+
+/* ============================================ */
+/* === top-label === */
+/* ============================================ */
+
 .top-label {
   display: flex;
-
   flex-direction: row;
   justify-content: space-around;
+
+  margin-top: 4vh;
 }
 
 .top-label div {
-  display: grid;
-
-  place-items: center;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
 .top-label h1 {
-  background-color: var(--color--backgtound--orange);
+  background-color: var(--color--background--orange);
   width: 20vw;
   height: 10vh;
 
@@ -156,12 +130,14 @@ body {
 
   border: solid 3px var(--color--black);
   box-shadow: 8px 8px 3px var(--color--shadow-orange);
+  margin: 0;
 } /* Стиль для заголовка программы */
 
 .top-label input {
   background-color: var(--color--background--beige);
-  width: 16vw;
-  height: 9vh;
+  width: max(330px, 20vw);
+  height: 10vh;
+  box-sizing: border-box;
 
   display: flex;
   align-items: center;
@@ -171,55 +147,86 @@ body {
   box-shadow:
     5px 5px var(--color--shadow--beige),
     5px 5px 3px var(--color--black);
-  border-radius: 30px;
+  border-radius: 1vw;
   transition:
     transform 0.3s ease,
     box-shadow 0.3s ease,
     border-color 0.3s ease,
     background-color 0.3s ease;
 
-  font-size: 1.9rem;
+  font-size: max(25px, 1.4vw);
   color: var(--color--black);
-  padding-left: 5vw;
-
-  grid-row: 1;
-  grid-column: 1;
+  padding-left: max(86px, 5vw);
 } /* Стиль для ввода месяца */
 
 .top-label span {
+  position: absolute;
+
+  left: 1vw;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   transition: transform 0.3s ease;
 
-  transform: translateX(-8vw);
-
-  font-size: 1.9rem;
+  font-size: max(25px, 1.4vw);
   color: var(--color--grey);
 
   z-index: 100;
-
-  grid-row: 1;
-  grid-column: 1;
 }
 
 .top-label input:focus {
   background-color: var(--color--active--alt--beige);
   transform: translate(-2px, -2px);
-
   outline: none;
-
   box-shadow:
     7px 7px var(--color--shadow--beige),
     7px 7px 3px var(--color--black);
 } /* Стиль при активации поля ввода */
 
 .top-label input:focus + span {
-  transform: translate(calc(-8vw - 2px), -2px);
+  transform: translate(-2px, -2px);
 } /* Стиль для спан при фокусе на поле ввода */
+
+/* ============================================ */
+/* === pretop-label === */
+/* ============================================ */
+
+.pretop-label {
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  gap: max(20px, 40vw);
+
+  margin-top: 5vh;
+}
+
+.pretop-label button {
+  background-color: var(--color--white);
+  height: 5vh;
+
+  aspect-ratio: 1 / 1;
+
+  white-space: nowrap;
+  font-size: 1.5rem;
+  font-weight: 600;
+
+  border: solid 3px var(--color--black);
+  border-right: none;
+} /* Стиль для кнопок в окнах задач */
+
+.pretop-label h2 {
+  width: 15vw;
+  padding-left: 1rem;
+} /* Стиль для текста в окнах задач */
 
 .task-label,
 .nodeadline-label {
-  background-color: var(--color--backgtound--orange);
-  width: 16vw;
+  background-color: var(--color--background--orange);
+  width: max(330px, 20vw);
   height: 5vh;
+  box-sizing: border-box;
 
   display: flex;
   align-items: center;
@@ -227,55 +234,62 @@ body {
 
   border: solid 3px var(--color--black);
   box-shadow: 0px 10px 2px var(--color--shadow-orange);
-
-  margin: 2vh 10vw 2vh 10vw;
 } /* Стиль для контенеров заголовков задач */
 
-.pretop-label button {
-  background-color: var(--color--white);
-  height: 5vh;
-  aspect-ratio: 1 / 1;
-
-  white-space: nowrap;
-  font-size: 1.2rem;
-  font-weight: 600;
-
-  border: none;
-  border-left: solid 2px var(--color--black);
-} /* Стиль для кнопок в окнах задач */
-
-.pretop-label h2 {
-  margin: 0 auto 0 0;
-
-  padding: 0 0 0 8px;
-} /* Стиль для текста в окнах задач */
+/* ============================================ */
+/* === label-text-quests === */
+/* ============================================ */
 
 .label-text-quests,
-.label-text-week {
-  width: 100%;
-  height: auto;
-} /* Стиль для контейнера колонок ввода задач */
+.label-text-task,
+.label-text-nodeadline {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-start;
+} /* Флекс расположения для основных контейнеров */
+
+.label-text-quests {
+  margin-top: 2vh;
+} /* Отступ для секции */
+
+.column-task,
+.column-nodeadline {
+  background-color: var(--color--background--orange);
+  width: 30vw;
+
+  border: solid 2px var(--color--black);
+  border-radius: 1rem;
+  box-shadow:
+    2px 2px var(--color--shadow--beige),
+    2px 2px 3px var(--color--black);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin: 0;
+  padding: 1vh 1vw;
+
+  gap: 12px;
+} /* Стиль для колонок задач */
 
 .label-text-task,
 .label-text-nodeadline {
   width: 30vw;
   height: 3vh;
 
-  display: flex;
-  justify-content: center;
   align-items: center;
-
-  margin: 4px 0 4px 0;
 } /* Стиль для контенера поля ввода и чекбокса */
 
 .task-input,
 .nodeadline-input {
   background-color: var(--color--background--beige);
   width: 100%;
-  height: 100%;
+  height: 3vh;
 
   border: solid 2px var(--color--black);
-  border-radius: 6px;
+  border-radius: 1vh;
   box-shadow:
     2px 2px var(--color--shadow--beige),
     2px 2px 3px var(--color--black);
@@ -285,10 +299,31 @@ body {
     transform 0.2s ease,
     box-shadow 0.2s ease;
 
-  padding: 0 0 0 5px;
-
   font-size: 1.2rem;
+  box-sizing: border-box;
+  padding-left: 8px;
 } /* Стиль для полей ввода задач */
+
+.task-cb,
+.nodeadline-cb {
+  background-color: var(--color--background--beige);
+  height: 3vh;
+  aspect-ratio: 1 / 1;
+
+  border: solid 2px var(--color--black);
+  border-radius: 1vh;
+  box-shadow:
+    2px 2px var(--color--shadow--beige),
+    2px 2px 3px var(--color--black);
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.3s ease;
+
+  position: relative;
+  box-sizing: border-box;
+} /* Стиль для чекбокса */
 
 .nodeadline-cb:checked,
 .task-cb:checked,
@@ -303,8 +338,8 @@ body {
 
 .task-input:focus,
 .nodeadline-input:focus,
-.label-text-task:has(.task-input:focus) .task-cb,
-.label-text-nodeadline:has(.nodeadline-input:focus) .nodeadline-cb {
+.task-input:focus .task-cb,
+.nodeadline-input:focus .nodeadline-cb {
   background-color: var(--color--active--alt--beige);
   transform: translate(-2px, -2px);
 
@@ -322,7 +357,7 @@ body {
   content: '✔';
   position: absolute;
   font-weight: 100;
-  font-size: 2.2rem;
+  font-size: 2rem;
   text-align: center;
 
   display: flex;
@@ -333,35 +368,26 @@ body {
   color: var(--color--black);
 } /* Стиль для состояния при активации */
 
-.task-cb,
-.nodeadline-cb {
-  background-color: var(--color--background--beige);
-  height: 100%;
-  aspect-ratio: 1 / 1;
-  border: solid 2px var(--color--black);
-  box-shadow:
-    2px 2px var(--color--shadow--beige),
-    2px 2px 3px var(--color--black);
-  border-radius: 6px;
-  transition:
-    background-color 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.3s ease;
-  margin: 0 6px 0 0;
+.main-photo img {
+  height: 35vh;
+  transform: translateY(-10%);
+} /* Главное фото */
 
-  position: relative;
-} /* Стиль для чекбокса */
+/* ============================================ */
+/* === days-week === */
+/* ============================================ */
 
 .days-week {
   width: 100%;
-  height: 8vh;
+  height: 6vh;
 
   display: flex;
   align-items: center;
-  justify-self: center;
+  justify-content: space-around;
 
-  letter-spacing: 2px;
   padding: 0;
+  margin: 0;
+  margin-top: 2vh;
 } /* Стиль для контейнера заголовков дней недели */
 
 .days-week li {
@@ -376,70 +402,45 @@ body {
     3px 3px var(--color--shadow--beige),
     3px 3px 3px var(--color--black);
 
+  box-sizing: border-box;
   list-style: none;
 } /* Стиль для текста заголовка дней недели */
 
-.column-monday,
-.column-tuesday,
-.column-wednesday,
-.column-thursday,
-.column-friday,
-.column-saturday,
-.column-sunday {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+/* ============================================ */
+/* === label-text-week === */
+/* ============================================ */
 
-  padding: 0;
-} /* Стиль для колонок дней недели */
-
-.column-task,
-.column-nodeadline {
-  background-color: var(--color--backgtound--orange);
-  width: 33vw;
-  height: auto;
-
-  padding: 2vh 0 2vh 0;
-
-  border: solid 2px var(--color--black);
-  border-radius: 20px;
-  box-shadow:
-    2px 2px var(--color--shadow--beige),
-    2px 2px 3px var(--color--black);
-
-  display: flex;
-  flex-direction: column;
-  justify-self: center;
-  align-items: center;
-} /* Стиль для колонок задач */
-
-.label-text-monday,
-.label-text-tuesday,
-.label-text-wednesday,
-.label-text-thursday,
-.label-text-friday,
-.label-text-saturday,
-.label-text-sunday {
+.label-text-week {
   display: flex;
   flex-direction: row;
-  width: 100%;
 
-  margin: 1vh 0 0 0;
+  justify-content: space-around;
+} /* Стиль для секции */
+
+.label-text-week ul {
+  display: flex;
+  flex-direction: column;
+
+  padding: 0;
+  margin: 0;
+  margin-top: 2vh;
+  gap: 1vh;
+} /* Стиль для колонок дней недели */
+
+.label-text-week ul li {
+  display: flex;
+  justify-content: center;
+
+  width: 100%;
 } /* Стиль для контейнеров с чекбоксом и полями ввода дней недели*/
 
-.monday-input,
-.tuesday-input,
-.wednesday-input,
-.thursday-input,
-.friday-input,
-.saturday-input,
-.sunday-input {
+.label-text-week ul li input[type='text'] {
   background-color: var(--color--background--beige);
-  width: 12vw;
+  width: 13vw;
   height: 3vh;
 
   border: solid 2px var(--color--black);
-  border-radius: 6px;
+  border-radius: 1vh;
   box-shadow:
     2px 2px var(--color--shadow--beige),
     2px 2px 3px var(--color--black);
@@ -450,15 +451,15 @@ body {
     box-shadow 0.2s ease;
 
   font-size: 1.2rem;
+  padding-left: 8px;
+  box-sizing: border-box;
 } /* Стиль для полей ввода дней недели */
 
-.monday-input:focus,
-.tuesday-input:focus,
-.wednesday-input:focus,
-.thursday-input:focus,
-.friday-input:focus,
-.saturday-input:focus,
-.sunday-input:focus {
+.label-text-week ul li input[type='checkbox'] {
+  display: none;
+} /* Удаление чекбокс у дней недели */
+
+.label-text-week ul li input[type='text']:focus {
   background-color: var(--color--active--alt--beige);
   transform: translate(-2px, -2px);
 
@@ -468,8 +469,3 @@ body {
     4px 4px var(--color--shadow--beige),
     4px 4px 3px var(--color--black);
 } /* Стиль при активации полей ввода дней недели */
-
-.main-photo img {
-  height: 35vh;
-  transform: translateY(-10%);
-}

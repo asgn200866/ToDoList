@@ -379,7 +379,7 @@ function updataDelete(group) {
   const elementText = config.label.querySelector('h2');
   elementText.textContent = `Do you confirm the ${group.list} clearing?`;
 
-  config.label.style.display = 'block';
+  config.label.style.visibility = 'visible';
 
   group.elements.forEach((element) => {
     element.onclick = () => {
@@ -389,9 +389,9 @@ function updataDelete(group) {
         localStorage.removeItem(`item_${group.list}`);
 
         createElement(configObject);
-        config.label.style.display = 'none';
+        config.label.style.visibility = 'hidden';
       } else if (element.id == 'no') {
-        config.label.style.display = 'none';
+        config.label.style.visibility = 'hidden';
       }
     };
   });
