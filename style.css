@@ -338,8 +338,8 @@ body {
 
 .task-input:focus,
 .nodeadline-input:focus,
-.task-input:focus .task-cb,
-.nodeadline-input:focus .nodeadline-cb {
+.label-text-task:has(.task-input:focus) .task-cb,
+.label-text-nodeadline:has(.nodeadline-input:focus) .nodeadline-cb {
   background-color: var(--color--active--alt--beige);
   transform: translate(-2px, -2px);
 
