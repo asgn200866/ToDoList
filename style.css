@@ -184,9 +184,9 @@ body {
     border-color 0.3s ease,
     background-color 0.3s ease;
 
-  font-size: max(25px, 2vw);
+  font-size: max(25px, 1.6vw);
   color: var(--color--black);
-  padding-left: max(100px, 7vw);
+  padding-left: max(100px, 6.5vw);
 } /* Стиль для ввода месяца */
 
 .top-label span {
@@ -200,7 +200,7 @@ body {
 
   transition: transform 0.3s ease;
 
-  font-size: max(25px, 2vw);
+  font-size: max(25px, 1.6vw);
   color: var(--color--grey);
 
   z-index: 100;
@@ -495,7 +495,7 @@ body {
 .label-text-week li h3 {
   background-color: var(--color--background--beige);
   width: 8vw;
-  height: 6vh;
+  height: 5vh;
 
   display: flex;
   align-items: center;

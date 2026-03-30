@@ -53,6 +53,8 @@ const constructorKey = {
 
         inputs: document.getElementsByClassName(`${item}-input`),
         checkboxes: document.getElementsByClassName('checkbox-day-week'),
+        currentElement: document.querySelector(`.day-name-${item}`),
+
         container: document.getElementById(`${item}Text`),
 
         arrayObjects: [],
@@ -459,7 +461,11 @@ function loadLocalStorage() {
             fragmentMain.appendChild(checkboxElement);
             fragmentMain.appendChild(inputElement);
 
-            object.container.insertAdjacentElement('afterbegin', fragmentMain);
+            if (daysWeekList.includes(object.name)) {
+              object.currentElement.insertAdjacentElement('afterEnd', fragmentMain);
+            } else if (questList.includes(object.name)) {
+              object.container.insertAdjacentElement('afterbegin', fragmentMain);
+            }
           });
         } else if (monthList.includes(object.name)) {
           const loadObject = loadArray[0];
