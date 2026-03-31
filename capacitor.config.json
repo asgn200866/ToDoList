@@ -1,0 +1,8 @@
+{
+  "appId": "com.asgn200866.todolist",
+  "appName": "ToDoList",
+  "webDir": "www",
+  "android": {
+    "windowSoftInputMode": "adjustPan"
+  }
+}

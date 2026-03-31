@@ -4,6 +4,9 @@
   "description": "ToDoList приложение для планирования задач",
   "main": "main.js",
   "devDependencies": {
+    "@capacitor/android": "^8.3.0",
+    "@capacitor/cli": "^8.3.0",
+    "@capacitor/core": "^8.3.0",
     "electron": "^41.1.0",
     "electron-packager": "^17.1.2"
   },
