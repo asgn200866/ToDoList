@@ -17,17 +17,18 @@ input[type='checkbox'] {
   -webkit-appearance: none;
 } /* Отключение дефолтного стиля чекбокса */
 
-html {
-  overflow: hidden;
-} /* Общие стили для сайта */
-
+html,
 body {
   width: 100%;
   padding: 0px;
   margin: 0px;
-  overflow: hidden;
+  overflow: auto;
   background-color: var(--bg--main);
-} /* Настройка для тела сайта */
+
+  height: auto;
+  min-height: 100vh;
+  scrollbar-gutter: stable;
+} /* Общие стили для сайта */
 
 :root {
   --bg--main: rgb(73, 107, 135);

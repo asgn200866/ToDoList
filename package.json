@@ -1,13 +1,14 @@
 {
   "name": "ToDoList",
-  "version": "1.0.0",
-  "description": "ToDoList приложение для планирования задач",
+  "version": "1.0.5",
+  "description": "ToDoList",
   "main": "main.js",
   "devDependencies": {
     "@capacitor/android": "^8.3.0",
     "@capacitor/cli": "^8.3.0",
     "@capacitor/core": "^8.3.0",
     "electron": "^41.1.0",
+    "electron-builder": "^26.8.1",
     "electron-packager": "^17.1.2"
   },
   "scripts": {
