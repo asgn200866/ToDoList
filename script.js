@@ -1,5 +1,5 @@
 const objectBdName = 'AllIbjectStorage'; // Имя хранилища
-const objectBdVersion = 8; // Версия хранилища
+const objectBdVersion = 9; // Версия хранилища
 let objectBd; // Глобальная переменная для хранилища
 
 class ObjectClass {
@@ -212,9 +212,9 @@ const constructorKey = {
     deleteFunctionList.map((item) => [
       item,
       {
-        name: item,
+        list: item,
         type: item.charAt(0).toUpperCase() + item.slice(1),
-        list: item.slice(0, -7),
+        name: item.slice(0, -7),
 
         container: document.querySelector(`[data-name="${item}"]`),
         label: document.querySelector(`.label-delete`),
@@ -251,7 +251,7 @@ arrayAllObject.forEach((group) => {
     if (smileList.includes(group.name)) {
       updataSmile(group, event);
     }
-    if (deleteFunctionList.includes(group.name)) {
+    if (deleteFunctionList.includes(group.list)) {
       updataDelete(group);
       labelDeleteImage();
     }
@@ -295,7 +295,10 @@ function createElement(group) {
 } // Функция создания элементов days quest
 
 arrayAllObject.forEach((group) => {
-  if (daysWeekList.includes(group.name) || questList.includes(group.name)) {
+  if (
+    'arrayObjects' in group &&
+    (daysWeekList.includes(group.name) || questList.includes(group.name))
+  ) {
     createElement(group);
   }
 }); // Создание первых элементов days quest
@@ -409,23 +412,27 @@ function updataSmile(group, event) {
 } // Обработка кнопки смайла smile
 
 function updataDelete(group) {
-  const config = constructorKey[group.name];
-  const configObject = constructorKey[group.list];
+  const config = constructorKey[group.list];
+  const configObject = constructorKey[group.name];
 
   const elementText = config.label.querySelector('h2');
-  elementText.textContent = `Do you confirm the ${group.list} clearing?`;
+  elementText.textContent = `Do you confirm the ${group.name} clearing?`;
 
   config.label.style.visibility = 'visible';
 
   group.elements.forEach((element) => {
-    element.onclick = () => {
+    element.onclick = async () => {
       if (element.id == 'yes') {
-        configObject.arrayObjects.length = 0;
-        configObject.container.replaceChildren();
-        localStorage.removeItem(`item_${group.list}`);
+        try {
+          await deleteElementBdAll(group);
+          configObject.arrayObjects.length = 0;
+          configObject.container.replaceChildren();
 
-        createElement(configObject);
-        config.label.style.visibility = 'hidden';
+          createElement(group);
+          config.label.style.visibility = 'hidden';
+        } catch (error) {
+          console.error(`При очистке хранилища ${group.name} произошла ошибка: `, error);
+        }
       } else if (element.id == 'no') {
         config.label.style.visibility = 'hidden';
       }
@@ -441,87 +448,161 @@ function labelDeleteImage() {
   elementImage.src = randomPhoto;
 } // Случайная вставка фото в окно удаления delete
 
-function saveStorage(object) {
-  const saveArray = object.arrayObjects;
-  const name = object.name;
-  const storeName = `store_${name}`;
+async function saveStorage(object) {
+  try {
+    await arraySaveToStorage(object);
+    console.log(`Сохранение прошло успешно!`);
+  } catch (error) {
+    console.error(`Ошибка при сохранении данных: `, error);
+  }
+} // Основная функция сохранения в БД
 
-  const transaction = objectBd.transaction([storeName], 'readwrite');
-  const objectStore = transaction.objectStore(storeName);
+function arraySaveToStorage(object) {
+  return new Promise((resolve, reject) => {
+    const storeName = `store_${object.name}`;
+    const transaction = objectBd.transaction([storeName], 'readwrite');
+    const objectStore = transaction.objectStore(storeName);
+    const saveArray = object.arrayObjects;
 
-  saveArray.forEach((item) => {
-    const request = objectStore.put(item);
-  });
+    if (saveArray.length === 0) {
+      transaction.oncomplete = () => resolve();
+      transaction.onerror = (event) => reject(event.target.error);
+      console.log(`Массив объекта ${object.name} пуст!`);
+      return;
+    }
 
-  transaction.oncomplete = function (event) {
-    console.log(`Сохранение в хранилище "${storeName}" завершено.`);
-  };
-  transaction.onerror = function (event) {
-    console.error(`Ошибка транзакции при сохранении в "${storeName}":`, event.target.error);
-  };
-} // Функция сохранения в БД
+    let requestComplected = 0;
+    const totalReqests = saveArray.length;
 
-function loadStorage() {
-  arrayAllObject.forEach((object) => {
-    if ('arrayObjects' in object) {
-      const storeName = `store_${object.name}`;
-      const transaction = objectBd.transaction([storeName], 'readonly');
-      const objectStore = transaction.objectStore(storeName);
+    saveArray.forEach((item) => {
+      const request = objectStore.put(item);
 
-      const request = objectStore.getAll();
-
-      request.onsuccess = function (event) {
-        const loadArray = event.target.result;
-
-        if (loadArray != null) {
-          object.arrayObjects = loadArray;
-          const reversedArray = [...loadArray].reverse();
-          if (daysWeekList.includes(object.name) || questList.includes(object.name)) {
-            reversedArray.forEach((loadObject) => {
-              const fragmentMain = document.createElement('li');
-              fragmentMain.className = object.baseClassName;
-              fragmentMain.dataset.id = loadObject.id;
-
-              const checkboxElement = document.createElement('input');
-              checkboxElement.type = 'checkbox';
-              checkboxElement.className = object.checkboxClassName;
-              checkboxElement.checked = loadObject.cbCheck;
-
-              const inputElement = document.createElement('input');
-              inputElement.type = 'text';
-              inputElement.className = object.inputClassName;
-              inputElement.value = loadObject.text;
-
-              fragmentMain.appendChild(checkboxElement);
-              fragmentMain.appendChild(inputElement);
-
-              if (daysWeekList.includes(object.name)) {
-                object.currentElement.insertAdjacentElement('afterEnd', fragmentMain);
-              } else if (questList.includes(object.name)) {
-                object.container.insertAdjacentElement('afterbegin', fragmentMain);
-              }
-            });
-          } else if (monthList.includes(object.name)) {
-            reversedArray.forEach((loadObject) => {
-              object.container.value = loadObject.text;
-            });
-          }
-          if (smileList.includes(object.name)) {
-            if (object.arrayObjects.length != 0) {
-              reversedArray.forEach((loadObject) => {
-                object.container.textContent = loadObject.text;
-              });
-            }
-          }
+      request.onsuccess = () => {
+        requestComplected++;
+        if (requestComplected === totalReqests) {
+          console.log(`Объект ${object.name} сохранен  в ${storeName} `);
         }
-        console.log(`Данные из ${storeName} успешно загружены!`);
       };
-      request.onerror = function () {
-        console.error(`Произошла ошибка при загрузке ${storeName}`);
+      request.onerror = (event) => {
+        console.error(
+          `Ошибка при сохранении объекта ${name} в "${storeName}":`,
+          event.target.error
+        );
+        reject(event.target.error);
       };
+    });
+    transaction.oncomplete = () => {
+      console.log(`Сохранение в хранилище ${storeName} завершено.`);
+      resolve();
+    };
+    transaction.onerror = (event) => {
+      console.error(`Ошибка транзакции при сохранении в ${storeName}:`, event.target.error);
+      reject(event.target.error);
+    };
+  });
+} //Функция для сохранения monthListб, smileList, questList, daysWeekList в БД
+
+const renderFunctions = {
+  monday: renderDaysOrQuests,
+  tuesday: renderDaysOrQuests,
+  wednesday: renderDaysOrQuests,
+  thursday: renderDaysOrQuests,
+  friday: renderDaysOrQuests,
+  saturday: renderDaysOrQuests,
+  sunday: renderDaysOrQuests,
+  task: renderDaysOrQuests,
+  nodeadline: renderDaysOrQuests,
+  month: renderMonth,
+  tasksmile: renderSmile,
+  nodeadlinesmile: renderSmile,
+}; // Список ключей для функций рендера
+
+async function loadStorage() {
+  const promises = arrayAllObject
+    .filter((object) => 'arrayObjects' in object)
+    .map(async (object) => {
+      const storeName = `store_${object.name}`;
+      try {
+        const loadArray = await loadAllStore(storeName);
+        object.arrayObjects = loadArray;
+
+        const renderer = renderFunctions[object.name];
+
+        if (renderer) {
+          renderer(object, loadArray);
+        } else {
+          console.warn(`Неизвестный тип объекта для рендера: ${object.name}`);
+        }
+      } catch (error) {
+        console.error(`Ошибка при загрузке из ${storeName}:`, error);
+      }
+    });
+  await Promise.all(promises);
+  console.log('Загрузка данных из всех хранилищ завершена.');
+} // Общая функция загрузки
+
+function loadAllStore(storeName) {
+  return new Promise((resolve, reject) => {
+    const transaction = objectBd.transaction([storeName], 'readonly');
+    const objectStore = transaction.objectStore(storeName);
+
+    const request = objectStore.getAll();
+
+    request.onsuccess = (event) => {
+      console.log(`Данные ${storeName} успешно загружены!`);
+      resolve(event.target.result);
+    };
+    request.onerror = (event) => {
+      console.error(`Ошибка при загрузке ${storeName}:`, event.target.error);
+      reject(event.target.error);
+    };
+    transaction.onerror = (event) => {
+      console.error(`Ошибка транзакции при загрузке ${storeName}:`, event.target.error);
+      reject(event.target.error);
+    };
+  });
+} // Функция загрузки хранилищ БД
+
+function renderDaysOrQuests(object, loadArray) {
+  const reversedArray = [...loadArray].reverse();
+
+  reversedArray.forEach((loadObject) => {
+    const fragmentMain = document.createElement('li');
+    fragmentMain.className = object.baseClassName;
+    fragmentMain.dataset.id = loadObject.id;
+
+    const checkboxElement = document.createElement('input');
+    checkboxElement.type = 'checkbox';
+    checkboxElement.className = object.checkboxClassName;
+    checkboxElement.checked = loadObject.cbCheck;
+
+    const inputElement = document.createElement('input');
+    inputElement.type = 'text';
+    inputElement.className = object.inputClassName;
+    inputElement.value = loadObject.text;
+
+    fragmentMain.appendChild(checkboxElement);
+    fragmentMain.appendChild(inputElement);
+
+    if (daysWeekList.includes(object.name)) {
+      object.currentElement.insertAdjacentElement('afterEnd', fragmentMain);
+    } else if (questList.includes(object.name)) {
+      object.container.insertAdjacentElement('afterbegin', fragmentMain);
     }
   });
-} // Функция чтения из локального хранилища
+} // Функция рендера questList, daysWeekList
+
+function renderMonth(object, loadArray) {
+  loadArray.forEach((loadObject) => {
+    object.container.value = loadObject.text;
+  });
+} // Функция рендера monthList
+
+function renderSmile(object, loadArray) {
+  loadArray.forEach((loadObject) => {
+    object.container.textContent = loadObject.text;
+  });
+} // Функция рендера smileList
 
 function deleteElementBdAll(group) {
   return openObjectBdPromise()
