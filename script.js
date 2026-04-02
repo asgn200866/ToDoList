@@ -1,5 +1,5 @@
 const objectBdName = 'AllIbjectStorage'; // Имя хранилища
-const objectBdVersion = 9; // Версия хранилища
+const objectBdVersion = 10; // Версия хранилища
 let objectBd; // Глобальная переменная для хранилища
 
 class ObjectClass {
@@ -212,9 +212,9 @@ const constructorKey = {
     deleteFunctionList.map((item) => [
       item,
       {
-        list: item,
+        name: item,
         type: item.charAt(0).toUpperCase() + item.slice(1),
-        name: item.slice(0, -7),
+        list: item.slice(0, -7),
 
         container: document.querySelector(`[data-name="${item}"]`),
         label: document.querySelector(`.label-delete`),
@@ -225,38 +225,74 @@ const constructorKey = {
 }; // Группа для имен объектов задач
 
 const arrayAllObject = Object.values(constructorKey); // Массив для перебора групп объектов
+const containerForGroupMap = new Map(); // Список соответствий для связи событий с объектами
 
-arrayAllObject.forEach((group) => {
-  group.container.addEventListener('input', (event) => {
-    if (!event.target.matches('input[type="text"]')) return;
-    if (daysWeekList.includes(group.name) || questList.includes(group.name)) {
-      const valuesTargetElement = getValue(event);
-      updateObject(group, valuesTargetElement);
-      deleteElement(group, valuesTargetElement, event);
-      saveStorage(group);
-    } else if (monthList.includes(group.name)) {
-      updataMonth(group, event);
-    }
-  });
-  group.container.addEventListener('change', (event) => {
-    if (!event.target.matches('input[type="checkbox"]')) return;
+arrayAllObject.forEach((obj) => {
+  if (obj.container) {
+    containerForGroupMap.set(obj.container, obj);
+  }
+}); // Заполение списка соответствий событий с объектами
 
-    if (questList.includes(group.name)) {
-      checkboxUpdateStyle(group, event);
-      saveStorage(group);
-    }
+function findGroupByContainer(findContainerByEvent) {
+  return containerForGroupMap.get(findContainerByEvent);
+} // Поиск и связь события с объектом
+
+function allEventListener() {
+  arrayAllObject.forEach((group) => {
+    group.container.addEventListener('input', handlerInputEvent);
+    group.container.addEventListener('change', handlerChangeEvent);
+    group.container.addEventListener('click', handlerClickEvent);
   });
-  group.container.addEventListener('click', (event) => {
-    if (!event.target.matches('button')) return;
-    if (smileList.includes(group.name)) {
-      updataSmile(group, event);
-    }
-    if (deleteFunctionList.includes(group.list)) {
-      updataDelete(group);
-      labelDeleteImage();
-    }
-  });
-}); // Обработчик событий
+} // Объявление различных типов обработчиков событий и добавление их на все элементы
+allEventListener(); // Инициализация функции обработки событий
+
+function handlerInputEvent(event) {
+  if (!event.target.matches('input[type="text"]')) return;
+  const group = findGroupByContainer(this);
+  if (!group) {
+    console.warn('Обьект не найден: ', group);
+  }
+
+  if (daysWeekList.includes(group.name) || questList.includes(group.name)) {
+    const valuesTargetElement = getValue(event);
+    updateObject(group, valuesTargetElement);
+    deleteElement(group, valuesTargetElement, event);
+    saveStorage(group);
+  } else if (monthList.includes(group.name)) {
+    updataMonth(group, event);
+  }
+} // Функция обработки ввода текста
+
+function handlerChangeEvent(event) {
+  if (!event.target.matches('input[type="checkbox"]')) return;
+  const group = findGroupByContainer(this);
+
+  if (!group) {
+    console.warn('Обьект не найден: ', group);
+  }
+
+  if (questList.includes(group.name)) {
+    checkboxUpdateStyle(group, event);
+    saveStorage(group);
+  }
+} // Функция обработки выбора чекбокса
+
+function handlerClickEvent(event) {
+  if (!event.target.matches('button')) return;
+  const group = findGroupByContainer(this);
+
+  if (!group) {
+    console.warn('Обьект не найден: ', group);
+  }
+
+  if (smileList.includes(group.name)) {
+    updataSmile(group, event);
+  }
+  if (deleteFunctionList.includes(group.name)) {
+    updataDelete(group);
+    labelDeleteImage();
+  }
+} // Функция обработки нажатия кнопок
 
 function getValue(event) {
   const currentElement = event.target;
@@ -295,10 +331,7 @@ function createElement(group) {
 } // Функция создания элементов days quest
 
 arrayAllObject.forEach((group) => {
-  if (
-    'arrayObjects' in group &&
-    (daysWeekList.includes(group.name) || questList.includes(group.name))
-  ) {
+  if (daysWeekList.includes(group.name) || questList.includes(group.name)) {
     createElement(group);
   }
 }); // Создание первых элементов days quest
@@ -412,23 +445,24 @@ function updataSmile(group, event) {
 } // Обработка кнопки смайла smile
 
 function updataDelete(group) {
-  const config = constructorKey[group.list];
-  const configObject = constructorKey[group.name];
+  const config = constructorKey[group.name];
+  const configObject = constructorKey[group.list];
 
   const elementText = config.label.querySelector('h2');
-  elementText.textContent = `Do you confirm the ${group.name} clearing?`;
+  elementText.textContent = `Do you confirm the ${group.list} clearing?`;
 
   config.label.style.visibility = 'visible';
+  const clearObject = constructorKey[group.list];
 
   group.elements.forEach((element) => {
     element.onclick = async () => {
       if (element.id == 'yes') {
         try {
-          await deleteElementBdAll(group);
+          await deleteElementBdAll(clearObject);
           configObject.arrayObjects.length = 0;
           configObject.container.replaceChildren();
 
-          createElement(group);
+          createElement(clearObject);
           config.label.style.visibility = 'hidden';
         } catch (error) {
           console.error(`При очистке хранилища ${group.name} произошла ошибка: `, error);
