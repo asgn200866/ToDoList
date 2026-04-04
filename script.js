@@ -10,10 +10,11 @@ class ObjectClass {
 
 function createSubclass() {
   return class extends ObjectClass {
-    constructor(text, cbCheck, id) {
+    constructor(text, cbCheck, id, type) {
       super(text);
       this.cbCheck = cbCheck;
       this.id = id;
+      this.type = type;
     }
   };
 } // Функция создания задач ObjectClass
@@ -219,6 +220,7 @@ function allEventListener() {
     group.container.addEventListener('input', handlerInputEvent);
     group.container.addEventListener('change', handlerChangeEvent);
     group.container.addEventListener('click', handlerClickEvent);
+    group.container.addEventListener('keydown', pressEnterHandler);
   });
 } // Объявление различных типов обработчиков событий и добавление их на все элементы
 allEventListener(); // Инициализация функции обработки событий
@@ -226,6 +228,7 @@ allEventListener(); // Инициализация функции обработ�
 function handlerInputEvent(event) {
   if (!event.target.matches('input[type="text"]')) return;
   const group = findGroupByContainer(this);
+  pressEnterHandler(event); // Вызов обработчика для клавиши "Ввод"
   if (!group) {
     console.warn('Обьект не найден: ', group);
   }
@@ -271,6 +274,38 @@ function handlerClickEvent(event) {
   }
 } // Функция обработки нажатия кнопок
 
+function pressEnterHandler(event) {
+  const currentParent = event.target.parentElement;
+
+  if (event.key === 'Enter' && !event.altKey) {
+    event.preventDefault();
+
+    const nextElement = currentParent.nextElementSibling;
+
+    if (nextElement) {
+      const nextInput = nextElement.querySelector('input[type="text"]');
+      if (nextInput) {
+        nextInput.focus();
+      }
+    } else {
+      console.warn('Достигнут последний элемент!');
+    }
+
+    if (event.shiftKey) {
+      event.preventDefault();
+      const previosElement = currentParent.previousElementSibling;
+
+      if (previosElement) {
+        const previosInput = previosElement.querySelector('input[type="text"]');
+        if (previosInput) {
+          previosInput.focus();
+        } else {
+        }
+      }
+    }
+  }
+} /* Функция обработки переноса между строками */
+
 function getValue(event) {
   const currentElement = event.target;
 
@@ -292,6 +327,7 @@ function createElement(group) {
   const fragmentMain = document.createElement('li');
   fragmentMain.className = config.baseClassName;
   fragmentMain.dataset.id = idElement;
+  fragmentMain.dataset.category = config.name;
 
   const inputElement = document.createElement('input');
   inputElement.type = 'text';
@@ -322,7 +358,7 @@ function createObject(group, valuesTargetElement) {
 
   const nameObject = createSubclass();
 
-  const objectClass = new nameObject(inputValue, checkboxValue, inputId);
+  const objectClass = new nameObject(inputValue, checkboxValue, inputId, group.name);
   config.arrayObjects.push(objectClass);
   return { objectClass };
 } // Создание объекта и добавление его в массив days quest
@@ -437,7 +473,8 @@ function updataDelete(group) {
         try {
           await deleteElementBdAll(clearObject);
           configObject.arrayObjects.length = 0;
-          configObject.container.replaceChildren();
+          const elementsToRemove = Array.from(configObject.container.children).slice(1);
+          elementsToRemove.forEach((child) => child.remove());
 
           createElement(clearObject);
           config.label.style.visibility = 'hidden';
@@ -581,6 +618,7 @@ function renderDaysOrQuests(object, loadArray) {
     const fragmentMain = document.createElement('li');
     fragmentMain.className = object.baseClassName;
     fragmentMain.dataset.id = loadObject.id;
+    fragmentMain.dataset.category = loadObject.type;
 
     const checkboxElement = document.createElement('input');
     checkboxElement.type = 'checkbox';
