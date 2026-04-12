@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "GNF";
+  src: url("fonts/GNF.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+} /* Добавление шрифта GNF */
+
 html,
 body {
   margin: 0;
@@ -7,20 +15,50 @@ body {
   height: auto;
   padding: 0px;
   margin: 0px;
-  background-color: rgb(73, 107, 135);
+  background-color: var(--bg--main);
   scrollbar-gutter: stable;
 
   display: flex;
   flex-direction: column;
 } /* Общие стили для сайта */
 
-code {
-  font-family:
-    source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
-}
-
 * {
   font-family: "GNF";
   box-sizing: border-box;
   letter-spacing: 2px;
 } /* Применение шрифта для всего сайта */
+
+main {
+  flex: 1 0 auto;
+} /* Стиль для основного окна */
+
+:root {
+  --bg--main: rgb(73, 107, 135);
+
+  --color--black: rgb(0, 0, 0);
+  --color--grey: rgb(162, 162, 162);
+  --color--white: rgb(256, 256, 256);
+  --color-yellow: rgb(255, 193, 0);
+  --color--background--orange: rgb(244, 191, 95);
+  --color--shadow-orange: rgb(150, 109, 85);
+
+  --color--background--beige: rgb(248, 235, 216);
+  --color--shadow--beige: rgb(219, 147, 112);
+  --color--active--beige: rgb(208, 195, 176);
+  --color--active--alt--beige: rgb(254, 250, 243);
+} /* Группа переменных для цветов */
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+} /* Отключение дефолтного стиля чекбокса */
+
+input:focus,
+textarea:focus,
+select:focus,
+button:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: initial;
+  background-color: transparent;
+} /* Отключение дефолтного стиля поля ввода */
