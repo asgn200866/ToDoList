@@ -1,0 +1,49 @@
+{
+  "name": "ToDoList",
+  "version": "1.0.8",
+  "description": "ToDoList",
+  "main": "main.js",
+  "devDependencies": {
+    "@capacitor/android": "^8.3.0",
+    "@capacitor/cli": "^8.3.0",
+    "@capacitor/core": "^8.3.0",
+    "electron": "^41.1.0",
+    "electron-builder": "^26.8.1",
+    "electron-packager": "^17.1.2"
+  },
+  "scripts": {
+    "start": "electron .",
+    "packager": "electron-packager . ToDoList --platform=win32 --arch=x64 --out=dist --overwrite"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/asgn200866/ToDoList.git"
+  },
+  "keywords": [
+    "todo",
+    "electron",
+    "planner"
+  ],
+  "author": "asgn200866",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/asgn200866/ToDoList/issues"
+  },
+  "homepage": "https://github.com/asgn200866/ToDoList#readme",
+  "build": {
+    "appId": "com.asgn200866.todolist",
+    "productName": "ToDoList",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "**/*",
+      "!node_modules/.cache"
+    ],
+    "win": {
+      "target": "portable",
+      "icon": "icon.ico"
+    }
+  }
+}

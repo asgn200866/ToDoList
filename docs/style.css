@@ -1,0 +1,618 @@
+@font-face {
+  font-family: 'GNF';
+  src: url('fonts/GNF.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+} /* Добавление шрифта GNF */
+
+* {
+  font-family: 'GNF';
+  box-sizing: border-box;
+  letter-spacing: 2px;
+} /* Применение шрифта для всего сайта */
+
+input[type='checkbox'] {
+  appearance: none;
+  -webkit-appearance: none;
+} /* Отключение дефолтного стиля чекбокса */
+
+html,
+body {
+  min-height: 100vh;
+  height: auto;
+  padding: 0px;
+  margin: 0px;
+  background-color: var(--bg--main);
+  scrollbar-gutter: stable;
+
+  display: flex;
+  flex-direction: column;
+} /* Общие стили для сайта */
+
+main {
+  flex: 1 0 auto;
+} /* Стиль для основного окна */
+
+:root {
+  --bg--main: rgb(73, 107, 135);
+
+  --color--black: rgb(0, 0, 0);
+  --color--grey: rgb(162, 162, 162);
+  --color--white: rgb(256, 256, 256);
+  --color-yellow: rgb(255, 193, 0);
+  --color--background--orange: rgb(244, 191, 95);
+  --color--shadow-orange: rgb(150, 109, 85);
+
+  --color--background--beige: rgb(248, 235, 216);
+  --color--shadow--beige: rgb(219, 147, 112);
+  --color--active--beige: rgb(208, 195, 176);
+  --color--active--alt--beige: rgb(254, 250, 243);
+} /* Группа переменных для цветов */
+
+footer {
+  width: 100%;
+  order: 10;
+} /* Стиля для обозначения подвала */
+
+/* ============================================ */
+/* === label-delete === */
+/* ============================================ */
+
+.label-delete {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  top: 50%;
+  left: 50%;
+  width: 48vw;
+  height: 60vh;
+
+  background-color: var(--color--background--beige);
+  border: solid 2px var(--color--black);
+  border-radius: 3vh;
+  visibility: hidden;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  z-index: 100;
+
+  overflow: hidden;
+} /* Основное окно подтверждения очистки списков */
+
+.label-delete h2 {
+  height: 5vh;
+} /* Стиль для текста в оке удаления */
+
+.buttons-succes {
+  width: 40vw;
+  height: 20vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  gap: 6vw;
+} /* Стиль для контейнера кнопок да/нет */
+
+.buttons-succes button {
+  background-color: var(--color--white);
+  width: 12vw;
+  height: 8vh;
+
+  transition: background-color 0.3s ease;
+
+  border: solid 2px var(--color--black);
+  border-radius: 2vh;
+} /* Стиль для кнопок да/нет */
+
+.buttons-succes button:hover {
+  background-color: var(--color--grey);
+} /* Стиль при наведении на кнопки да/нет */
+
+.label-delete img {
+  width: 30vh;
+} /* Отображение фото в окне удаления */
+
+@media (width <= 1600px) {
+  .label-delete {
+    width: 80vw;
+    height: 50vh;
+  }
+
+  .label-delete h2 {
+    width: 70vw;
+    text-align: center;
+  } /* Стиль для текста в оке удаления */
+
+  .buttons-succes {
+    width: 60vw;
+    height: 12vh;
+  } /* Стиль для контейнера кнопок да/нет */
+
+  .buttons-succes button {
+    width: 30vw;
+    height: 6vh;
+  } /* Стиль для кнопок да/нет */
+
+  .label-delete img {
+    width: 24vh;
+  }
+} /* Мобильная версия */
+
+/* ============================================ */
+/* === top-label === */
+/* ============================================ */
+
+.top-label {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  margin-top: 4vh;
+} /* Шапка сайта */
+
+.top-label div {
+  position: relative;
+  display: flex;
+  align-items: center;
+} /* Отображение названия */
+
+.top-label h1 {
+  background-color: var(--color--background--orange);
+  width: 20vw;
+  height: 10vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: solid 3px var(--color--black);
+  box-shadow: 8px 8px 3px var(--color--shadow-orange);
+  padding: 0 1vw;
+  font-size: 3vh;
+  margin: 0;
+} /* Стиль для заголовка программы */
+
+.top-label input {
+  background-color: var(--color--background--beige);
+  width: 20vw;
+  height: 10vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: solid 3px var(--color--black);
+  box-shadow:
+    5px 5px var(--color--shadow--beige),
+    5px 5px 3px var(--color--black);
+  border-radius: 1vw;
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    border-color 0.3s ease,
+    background-color 0.3s ease;
+
+  font-size: clamp(25px, 1.6vw, 36px);
+  color: var(--color--black);
+  padding-left: clamp(100px, 6.5vw, 160px);
+} /* Стиль для ввода месяца */
+
+.top-label span {
+  position: absolute;
+
+  left: 1vw;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: transform 0.3s ease;
+
+  font-size: clamp(25px, 1.6vw, 36px);
+  color: var(--color--grey);
+
+  z-index: 100;
+} /* Отображение подсказки в поле ввода */
+
+.top-label input:focus {
+  background-color: var(--color--active--alt--beige);
+  transform: translate(-2px, -2px);
+  outline: none;
+  box-shadow:
+    7px 7px var(--color--shadow--beige),
+    7px 7px 3px var(--color--black);
+} /* Стиль при активации поля ввода */
+
+.top-label input:focus + span {
+  transform: translate(-2px, -2px);
+} /* Стиль для спан при фокусе на поле ввода */
+
+@media (width <= 1600px) {
+  .top-label {
+    width: 100%;
+    margin-top: 2vh;
+  }
+
+  .top-label h1 {
+    width: 40vw;
+    height: 5vh;
+    font-size: 1.4vh;
+  }
+
+  .top-label input {
+    height: 5vh;
+    width: 50vw;
+    padding-left: clamp(60px, 5vw, 100px);
+    font-size: 1.6vh;
+  }
+
+  .top-label span {
+    font-size: 1.6vh;
+  }
+} /* Мобильная версия */
+
+/* ============================================ */
+/* === label-text-quests === */
+/* ============================================ */
+
+.label-text-quests,
+.label-text-task,
+.label-text-nodeadline {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-start;
+  position: relative;
+} /* Флекс расположения для основных контейнеров */
+
+.label-text-quests {
+  margin-top: 12vh;
+} /* Отступ для секции */
+
+.column-task,
+.column-nodeadline {
+  background-color: var(--color--background--orange);
+  width: 30vw;
+
+  border: solid 2px var(--color--black);
+  border-radius: 1vh;
+  box-shadow:
+    2px 2px var(--color--shadow--beige),
+    2px 2px 3px var(--color--black);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin: 0;
+  padding: 1vh 0.2vw;
+
+  gap: 12px;
+} /* Стиль для колонок задач */
+
+.label-text-task,
+.label-text-nodeadline {
+  width: 100%;
+  height: 3vh;
+
+  gap: 0.2vw;
+  align-items: center;
+} /* Стиль для контенера поля ввода и чекбокса */
+
+.task-input,
+.nodeadline-input {
+  background-color: var(--color--background--beige);
+  width: 100%;
+  height: 3vh;
+
+  border: solid 2px var(--color--black);
+  border-radius: 1vh;
+  box-shadow:
+    2px 2px var(--color--shadow--beige),
+    2px 2px 3px var(--color--black);
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  font-size: 2vh;
+  padding-left: 8px;
+} /* Стиль для полей ввода задач */
+
+.task-cb,
+.nodeadline-cb {
+  background-color: var(--color--background--beige);
+  height: 3vh;
+  aspect-ratio: 1 / 1;
+
+  border: solid 2px var(--color--black);
+  border-radius: 1vh;
+  box-shadow:
+    2px 2px var(--color--shadow--beige),
+    2px 2px 3px var(--color--black);
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.3s ease;
+
+  position: relative;
+} /* Стиль для чекбокса */
+
+.nodeadline-cb:checked,
+.task-cb:checked,
+.nodeadline-cb:checked + .nodeadline-input,
+.task-cb:checked + .task-input {
+  background-color: var(--color--active--beige) !important;
+  transform: translate(2px, 2px) !important;
+
+  box-shadow: 0px 0px 0px var(--color--black) !important;
+  text-decoration: line-through;
+} /* Стиль для чекбокса при активации. Связь с полями ввода */
+
+.task-input:focus,
+.nodeadline-input:focus,
+.label-text-task:has(.task-input:focus) .task-cb,
+.label-text-nodeadline:has(.nodeadline-input:focus) .nodeadline-cb {
+  background-color: var(--color--active--alt--beige);
+  transform: translate(-2px, -2px);
+
+  outline: none;
+
+  box-shadow:
+    4px 4px var(--color--shadow--beige),
+    4px 4px 3px var(--color--black);
+} /* Стили при активации полей ввода. Связь с чекбоксами */
+
+.task-cb:checked::after,
+.nodeadline-cb:checked::after {
+  width: 100%;
+  height: 100%;
+  content: '✔';
+  position: absolute;
+  font-weight: 100;
+  font-size: 3vh;
+  text-align: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+  color: var(--color--black);
+} /* Стиль для состояния при активации */
+
+.main-photo img {
+  height: 35vh;
+  transform: translateY(-10%);
+} /* Главное фото */
+
+.pretop-label h2 {
+  width: max(270px, 20vw);
+  padding-left: 1vw;
+  margin: 0;
+  margin-right: auto;
+
+  font-size: 2vh;
+} /* Стиль для текста в окнах задач */
+
+.task-label,
+.nodeadline-label {
+  background-color: var(--color--background--orange);
+  width: max(400px, 20vw);
+  height: 5vh;
+
+  position: absolute;
+  top: -8vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border: solid 3px var(--color--black);
+  box-shadow: 0px 10px 2px var(--color--shadow-orange);
+} /* Стиль для контенеров заголовков задач */
+
+.task-label div,
+.nodeadline-label div {
+  display: flex;
+  justify-content: space-evenly;
+} /* Отображение шапки над задачами */
+
+.task-label button,
+.nodeadline-label button {
+  background-color: var(--color--white);
+  height: 5vh;
+  aspect-ratio: 1 / 1;
+
+  white-space: nowrap;
+  font-size: 2vh;
+  font-weight: 600;
+
+  border: solid 3px var(--color--black);
+  border-right: none;
+
+  padding: 1vh;
+} /* Стиль для кнопок в окнах задач */
+
+@media (width <= 1600px) {
+  .pretop-label {
+    margin-top: 3vh;
+    gap: 3vw;
+  }
+
+  .task-label h2,
+  .nodeadline-label h2 {
+    font-size: 1.2vh;
+  }
+
+  .task-label,
+  .nodeadline-label {
+    height: 4vh;
+    width: max(100px, 45vw);
+  }
+
+  .task-label button,
+  .nodeadline-label button {
+    height: 4vh;
+    font-size: 1.6vh;
+    padding: 0.6vh;
+  }
+
+  .column-task,
+  .column-nodeadline {
+    width: 46vw;
+    padding: 1vw;
+    gap: 1vw;
+  }
+
+  .label-text-task,
+  .label-text-nodeadline {
+    width: 44vw;
+  }
+
+  .task-input,
+  .nodeadline-input {
+    font-size: 1.2vh;
+  }
+
+  .task-cb:checked::after,
+  .nodeadline-cb:checked::after {
+    font-size: 2.2vh;
+  }
+
+  .main-photo img {
+    display: none;
+  }
+} /* Мобильная версия */
+
+/* ============================================ */
+/* === label-text-week === */
+/* ============================================ */
+
+.label-text-week {
+  display: flex;
+
+  justify-content: space-around;
+  margin-top: 2vh;
+} /* Стиль для секции */
+
+.label-text-week li h3 {
+  background-color: var(--color--background--beige);
+  width: 8vw;
+  height: 5vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: solid 2px var(--color--black);
+  border-radius: 20px;
+  box-shadow:
+    3px 3px var(--color--shadow--beige),
+    3px 3px 3px var(--color--black);
+
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.3s ease;
+
+  list-style: none;
+  font-size: 1.6vh;
+  margin: 0 3vw;
+} /* Стиль для текста заголовка дней недели */
+
+.day h3:active {
+  background-color: var(--color--active--beige);
+  box-shadow: 0px 0px 0px var(--color--black);
+  transform: translate(2px, 2px) !important;
+} /* Прорисовка функции нажатия на название дней недели */
+
+.label-text-week ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  padding: 0;
+  margin: 1vh 0;
+  gap: 1vh;
+} /* Стиль для колонок дней недели */
+
+.label-text-week ul li {
+  display: flex;
+  justify-content: center;
+
+  width: 100%;
+  user-select: none;
+} /* Стиль для контейнеров с чекбоксом и полями ввода дней недели*/
+
+.label-text-week ul li input[type='text'] {
+  background-color: var(--color--background--beige);
+  width: 100%;
+  height: 3vh;
+
+  border: solid 2px var(--color--black);
+  border-radius: 1vh;
+  box-shadow:
+    2px 2px var(--color--shadow--beige),
+    2px 2px 3px var(--color--black);
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  font-size: 2vh;
+  padding-left: 8px;
+  margin: 0 1vw;
+} /* Стиль для полей ввода дней недели */
+
+.label-text-week ul li input[type='checkbox'] {
+  display: none;
+} /* Удаление чекбокс у дней недели */
+
+.label-text-week ul li input[type='text']:focus {
+  background-color: var(--color--active--alt--beige);
+  transform: translate(-2px, -2px);
+
+  outline: none;
+
+  box-shadow:
+    4px 4px var(--color--shadow--beige),
+    4px 4px 3px var(--color--black);
+} /* Стиль при активации полей ввода дней недели */
+
+@media (width <= 1600px) {
+  .label-text-week {
+    flex-wrap: wrap;
+    row-gap: 3vh;
+  }
+
+  .label-text-week li h3 {
+    width: 100%;
+    height: 3vh;
+
+    box-shadow:
+      1px 1px var(--color--shadow--beige),
+      1px 1px 1px var(--color--black);
+
+    font-size: 1.2vh;
+  }
+
+  .label-text-week ul {
+    flex: 1 1 auto;
+    width: calc((100% - 2 * 1vw) / 4);
+  }
+
+  .label-text-week ul li {
+    width: 100%;
+  }
+
+  .label-text-week ul li input[type='text'] {
+    font-size: 1.2vh;
+  }
+} /* Мобильная версия */

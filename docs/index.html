@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ToDoList</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="top-label">
+      <h1>Monthly Planner</h1>
+      <div>
+        <input type="text" id="monthElement" />
+        <span>month:</span>
+      </div>
+    </header>
+    <!-- Панель заголовка и месяца -->
+    <main>
+      <section class="label-text-quests" aria-label="Поля ввода задач">
+        <ul class="column-task" id="taskText">
+          <li class="task-label">
+            <h2>tasks</h2>
+            <div>
+              <button
+                class="smile-btn"
+                data-class="tasksmile"
+                aria-label="Выбрать случайный смайлик"
+              ></button>
+              <button class="button-delete" data-name="task-delete" aria-label="Удалить все задачи">
+                ✕
+              </button>
+            </div>
+          </li>
+        </ul>
+        <!-- Блок для колонки задач -->
+        <div class="main-photo">
+          <img src="galery/mainphoto.jpg" alt="Главное фото" />
+        </div>
+        <!-- Мемное фото в центре -->
+        <ul class="column-nodeadline" id="nodeadlineText">
+          <li class="nodeadline-label">
+            <h2>no deadline</h2>
+            <div>
+              <button
+                class="smile-btn"
+                data-class="nodeadlinesmile"
+                aria-label="Выбрать случайный смайлик"
+              ></button>
+              <button
+                class="button-delete"
+                data-name="nodeadline-delete"
+                aria-label="Удалить все задачи"
+              >
+                ✕
+              </button>
+            </div>
+          </li>
+        </ul>
+        <!-- Блок для колонки задач без крайнего срока -->
+      </section>
+      <!-- Колонки задач -->
+      <section class="label-text-week" aria-label="Поля ввода дней недели">
+        <ul class="column-monday" id="mondayText">
+          <li class="day-name-monday day"><h3>monday</h3></li>
+        </ul>
+        <ul class="column-tuesday" id="tuesdayText">
+          <li class="day-name-tuesday day"><h3>tuesday</h3></li>
+        </ul>
+        <ul class="column-wednesday" id="wednesdayText">
+          <li class="day-name-wednesday day"><h3>wednesday</h3></li>
+        </ul>
+        <ul class="column-thursday" id="thursdayText">
+          <li class="day-name-thursday day"><h3>thursday</h3></li>
+        </ul>
+        <ul class="column-friday" id="fridayText">
+          <li class="day-name-friday day"><h3>friday</h3></li>
+        </ul>
+        <ul class="column-saturday" id="saturdayText">
+          <li class="day-name-saturday day"><h3>saturday</h3></li>
+        </ul>
+        <ul class="column-sunday day" id="sundayText">
+          <li class="day-name-sunday"><h3>sunday</h3></li>
+        </ul>
+      </section>
+      <!-- Колонки задач для дней недели -->
+    </main>
+    <footer>
+      <p class="version">v1.0.8</p>
+      <!-- Обозначение версии -->
+    </footer>
+    <div class="label-delete">
+      <h2></h2>
+      <img class="image-mem" alt="Мем фото" />
+      <div class="buttons-succes">
+        <button data-type="button-change" id="yes">Yes</button>
+        <button data-type="button-change" id="no">No</button>
+      </div>
+    </div>
+    <!-- Окно удаления -->
+
+    <script src="script.js"></script>
+  </body>
+</html>
