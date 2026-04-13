@@ -1,14 +1,22 @@
-import { useState } from "react"; // Импорт хука
 import { TopLabel } from "./components/TopLabel";
-import "./components/TopLabel.css";
+import { LabelTextQuest } from "./components/LabelTextQuests";
+import { LabelTextWeek } from "./components/LabelTextWeek";
+import { Version } from "./components/version";
 
 function App() {
-  const [month, setMonth] = useState("");
-
   return (
-    <main className="App">
-      <TopLabel value={month} onInput={setMonth} />
-    </main>
+    <>
+      <header>
+        <TopLabel />
+      </header>
+      <main>
+        <LabelTextQuest />
+        <LabelTextWeek />
+      </main>
+      <footer>
+        <Version />
+      </footer>
+    </>
   );
 }
 

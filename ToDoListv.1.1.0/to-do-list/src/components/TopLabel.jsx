@@ -1,14 +1,12 @@
-export function TopLabel({ value, onInput }) {
+import "./TopLabel.css";
+
+export function TopLabel() {
   return (
     <header className="top-label">
       <h1>Monthly Planner</h1>
       <div>
         <span>month:</span>
-        <input
-          type="text"
-          value={value}
-          onChange={(e) => onInput(e.target.value)}
-        />
+        <input type="text" />
       </div>
     </header>
   );

@@ -6,11 +6,19 @@
   font-display: swap;
 } /* Добавление шрифта GNF */
 
+* {
+  font-family: "GNF";
+  box-sizing: border-box;
+  letter-spacing: 2px;
+} /* Применение шрифта для всего сайта */
+
+input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+} /* Отключение дефолтного стиля чекбокса */
+
 html,
 body {
-  margin: 0;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   min-height: 100vh;
   height: auto;
   padding: 0px;
@@ -22,15 +30,15 @@ body {
   flex-direction: column;
 } /* Общие стили для сайта */
 
-* {
-  font-family: "GNF";
-  box-sizing: border-box;
-  letter-spacing: 2px;
-} /* Применение шрифта для всего сайта */
-
 main {
   flex: 1 0 auto;
 } /* Стиль для основного окна */
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
 
 :root {
   --bg--main: rgb(73, 107, 135);
@@ -48,17 +56,6 @@ main {
   --color--active--alt--beige: rgb(254, 250, 243);
 } /* Группа переменных для цветов */
 
-input[type="checkbox"] {
-  appearance: none;
-  -webkit-appearance: none;
-} /* Отключение дефолтного стиля чекбокса */
-
-input:focus,
-textarea:focus,
-select:focus,
-button:focus {
-  outline: none;
-  box-shadow: none;
-  border-color: initial;
-  background-color: transparent;
-} /* Отключение дефолтного стиля поля ввода */
+footer {
+  width: 100%;
+} /* Стиля для обозначения подвала */
