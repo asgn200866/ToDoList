@@ -148,6 +148,7 @@
 
   position: absolute;
   top: -8vh;
+  text-indent: 10px;
 
   display: flex;
   align-items: center;
@@ -188,6 +189,7 @@
   .task-label h2,
   .nodeadline-label h2 {
     font-size: 1.2vh;
+    text-indent: 30px;
   }
 
   .task-label,
