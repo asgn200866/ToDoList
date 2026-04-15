@@ -55,6 +55,8 @@
   border: none;
   border-radius: 1vw;
 
+  transition: background-color 0.3s ease;
+
   font-size: clamp(25px, 1.6vw, 36px);
 } /* Стиль для ввода месяца */
 
@@ -77,10 +79,11 @@
   box-shadow:
     7px 7px var(--color--shadow--beige),
     7px 7px 3px var(--color--black);
-} /* Стиль для всего поля */
+} /* Стиль для всего поля при фокусе*/
 
 .top-label input:focus {
   background-color: var(--color--active--alt--beige);
+  outline: none;
 } /* Стиль при активации поля ввода */
 
 .top-label input:focus + span {
