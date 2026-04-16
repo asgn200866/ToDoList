@@ -1,7 +1,7 @@
-import { ColumnNodeadline } from "./ColumnNodeadline";
-import mainPhoto from "../galery/mainphoto.jpg";
-import { ColumnTask } from "./ColumnTask";
-import "./LabelTextQuest.css";
+import { ColumnNodeadline } from './ColumnNodeadline';
+import mainPhoto from '../galery/mainphoto.jpg';
+import { ColumnTask } from './ColumnTask';
+import './LabelTextQuest.css';
 
 export function LabelTextQuest() {
   return (

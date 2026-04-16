@@ -1,14 +1,7 @@
-import "./LabelTextWeek.css";
+import './LabelTextWeek.css';
+import { LabelTextInput } from './LabelTextInput';
 
-const daysOfWeek = [
-  "monday",
-  "tuesday",
-  "wednesday",
-  "thursday",
-  "friday",
-  "saturday",
-  "sunday",
-];
+const daysOfWeek = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
 export function LabelTextWeek() {
   return (
@@ -18,6 +11,7 @@ export function LabelTextWeek() {
           <li className={`day-name-${day} day`}>
             <h3>{day}</h3>
           </li>
+          <LabelTextInput />
         </ul>
       ))}
     </section>

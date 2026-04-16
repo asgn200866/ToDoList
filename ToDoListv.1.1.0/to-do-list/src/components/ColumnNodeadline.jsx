@@ -1,3 +1,5 @@
+import { LabelTextInput } from './LabelTextInput';
+
 export function ColumnNodeadline() {
   return (
     <ul className="column-nodeadline" id="nodeadlineText">
@@ -18,6 +20,7 @@ export function ColumnNodeadline() {
           </button>
         </div>
       </li>
+      <LabelTextInput />
     </ul>
   );
 }
