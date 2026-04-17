@@ -6,6 +6,8 @@ import { Version } from './components/version';
 import { LoadFromDB } from './utils/loadFromDB';
 import { useState, useEffect } from 'react';
 
+import { DataProvider, useData } from './DataContext';
+
 function App() {
   const [allData, setAllData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -26,12 +28,10 @@ function App() {
 
   if (loading) return <div>Загрузка...</div>;
 
-  const months = allData.find((item) => item.type === 'month');
-
   return (
-    <>
+    <DataProvider value={allData}>
       <header>
-        <TopLabel months={months} />
+        <TopLabel />
       </header>
       <main>
         <LabelTextQuest />
@@ -40,7 +40,7 @@ function App() {
       <footer>
         <Version />
       </footer>
-    </>
+    </DataProvider>
   );
 }
 

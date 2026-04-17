@@ -1,9 +1,16 @@
 import './TopLabel.css';
-import { useState } from 'react';
-import { createObjectClass } from '../utils/createObjects';
-import { saveToDB, LoadFromDB } from '../utils/saveToDB';
 
-export function TopLabel({ months }) {
+import { useState } from 'react';
+import { useData } from '../DataContext';
+
+import { createObjectClass } from '../utils/createObjects';
+import { saveToDB } from '../utils/saveToDB';
+
+export function TopLabel() {
+  const allData = useData();
+
+  const months = allData.find((item) => item.type === 'month');
+
   const [month, setMonth] = useState(months?.text || '');
 
   const hundlerInput = (e) => {

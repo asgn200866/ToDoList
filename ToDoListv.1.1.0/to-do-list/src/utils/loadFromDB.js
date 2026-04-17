@@ -39,8 +39,9 @@ export const LoadFromDB = async () => {
     const results = await Promise.all(promises);
 
     const combinedArray = results.flat(Infinity);
+    const sortedData = combinedArray.sort((a, b) => a.createdAt - b.createdAt);
 
-    return combinedArray;
+    return sortedData;
   } catch (error) {
     console.error('Ошибка при загрузке хранилищ:', error);
     throw error;

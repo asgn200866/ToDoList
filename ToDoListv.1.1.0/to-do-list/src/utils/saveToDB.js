@@ -7,6 +7,7 @@ export const saveToDB = async (object) => {
   return new Promise((resolve, reject) => {
     const transaction = db.transaction(storeName, 'readwrite');
     const objectStore = transaction.objectStore(storeName);
+    object.createdAt = Date.now();
 
     const request = objectStore.put(object);
 

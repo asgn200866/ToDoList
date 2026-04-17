@@ -1,4 +1,4 @@
-import { LabelTextInput } from './LabelTextInput';
+import { LabelTextInputNodeadline } from './LabelTextInputNodeadline';
 
 export function ColumnNodeadline() {
   return (
@@ -20,7 +20,7 @@ export function ColumnNodeadline() {
           </button>
         </div>
       </li>
-      <LabelTextInput />
+      <LabelTextInputNodeadline />
     </ul>
   );
 }

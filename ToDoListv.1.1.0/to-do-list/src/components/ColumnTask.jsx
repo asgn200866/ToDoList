@@ -1,6 +1,12 @@
-import { LabelTextInput } from './LabelTextInput';
+import { LabelTextInputTaskLoad } from './LabelTextInputTaskLoad';
+import { LabelTextInputTaskNew } from './LabelTextInputTaskNew';
+
+import { useData } from '../DataContext';
 
 export function ColumnTask() {
+  const allData = useData();
+  const tasks = allData.filter((item) => item.type === 'task');
+
   return (
     <ul className="column-task" id="taskText">
       <li className="task-label">
@@ -17,7 +23,13 @@ export function ColumnTask() {
           </button>
         </div>
       </li>
-      <LabelTextInput />
+      {tasks.map((item) => (
+        <LabelTextInputTaskLoad
+          key={item.id} // React требует уникальный ключ для элементов списка
+          item={item}
+        />
+      ))}
+      <LabelTextInputTaskNew />
     </ul>
   );
 }
